@@ -20,3 +20,17 @@ Thumbs.db
 # MATLAB
 *.asv
 *.mat.autosave
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Model weights
+*.pt
+*.pth
+*.ckpt
+
+# Logs and OS files
+logs/
+._*

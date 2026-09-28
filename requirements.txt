@@ -1,0 +1,4 @@
+﻿# Training dependencies are not yet validated or locked.
+# See README.md and PLAN step 4 for environment setup and verification.
+# After a successful GPU dry run, record actual dependencies and versions here.
+# Installing this placeholder does not create a working training environment.

@@ -1,7 +1,7 @@
 # PLAN：建立可辨識蘭花花、莖、葉的 SAM 3 fine-tuning 模型
 
 - 建立日期：2026-09-28
-- 提出者：陳彥彣
+- 提出者：廖柏任
 - 狀態：草稿
 - 審核者與日期：
 
@@ -23,10 +23,11 @@
 
 **輸入**
 
-- `data/processed/` 中的原始影像與 COCO annotation JSON
+- `data/processed/annotations_area_fixed/{train,valid,test}/` 中的修正副本影像與 `_annotations.coco.json`
 - `SPEC.md` 中的類別、影像座標與資料格式定義
 - 既有 SAM 3 基礎權重
 - RTX 5090 訓練環境
+- 測試集支架評估遮罩：`data/processed/support_eval/test/`，由人工依 SPEC 標註，僅供評估，不作為模型訓練類別。
 
 **輸出**
 
@@ -35,7 +36,7 @@
 - `scripts/2026-09-28_train_sam3_orchid.py`：SAM 3 fine-tuning 腳本
 - `scripts/2026-09-28_evaluate_sam3_orchid.py`：測試集推論與評估腳本
 - `results/figures/2026-09-28_sam3_orchid_examples.png`：測試影像的預測遮罩預覽
-- `results/tables/2026-09-28_sam3_orchid_metrics.csv`：flower、stem、leaf 的 IoU、Dice、Precision、Recall
+- `results/tables/2026-09-28_sam3_orchid_metrics.csv`：每類與 macro-average 的 IoU、Dice、Precision、Recall，以及支架誤判比例、分子、分母和 N/A 原因
 - `results/models/`：訓練 checkpoint 與訓練設定副本
 
 ## 3. 步驟拆解
@@ -44,32 +45,54 @@
 
 | # | 步驟 | 驗收標準 |
 |---|---|---|
-| 1 | 盤點 `data/processed/` 的 COCO JSON、影像數量、類別名稱與 annotation 數量；不修改任何資料檔。 | 確認類別恰為 `flower`、`stem`、`leaf`；每筆 annotation 都能對應到存在的影像。 |
-| 2 | 驗證遮罩格式、影像尺寸、空遮罩、重複 image ID 與損毀影像，輸出資料品質報告。 | 產出驗證表；所有錯誤項目明確列出，未通過時停止並回報。 |
-| 3 | 依植株／拍攝序列建立固定的 train、validation、test split，避免近似影像跨集合。 | 三份資料互斥、可重跑，且每個集合都有三類有效 annotation。 |
-| 4 | 建立 SAM 3 訓練設定：RTX 5090、bfloat16 autocast、初始 batch size 1、可儲存與恢復 checkpoint。 | 以一小批資料完成訓練 dry run，GPU 可用且不發生 dtype、資料格式或顯存錯誤。 |
+| 1 | 盤點 `data/processed/` 的 COCO JSON、影像數量、類別名稱與 annotation 數量；不修改任何資料檔。 | annotation 實際使用的 category_id 必須為 1、2、3，映射為 flower=1、leaf=2、stem=3，且三類均有標註；類別表允許保留未使用的 0=sam3，但 annotation 不得引用 0；每筆 annotation 的 image_id 均能對應到存在的影像。 |
+| 2 | 驗證遮罩格式、影像尺寸、空遮罩、每份 COCO JSON 內 image ID 的唯一性與損毀影像，輸出資料品質報告；不同 JSON 使用相同 image ID 不視為重複影像，跨集合重複影像由第 3 步依影像內容與來源檢查。 | 產出驗證表；所有錯誤項目明確列出，未通過時停止並回報。 |
+| 3 | 沿用原始切分，讀取 `data/processed/annotations_area_fixed/` 下的 train、valid、test 切分（211／60／30 張），記錄影像清單，檢查跨集合重複影像與近似影像，並確認植株／拍攝序列來源。 | 影像數量與清單一致；無跨集合重複影像；近似影像經人工確認。若發現相同植株／序列跨集合，或缺少資訊而無法確認，停止並回報，不宣告資料洩漏檢查通過。 |
+| 4 | 建立專用 Python 環境，確認 SAM 3 來源與 commit、PyTorch／torchvision 版本及 CUDA 安裝方式；依 SPEC 設定 RTX 5090、bfloat16 autocast、batch size 4 與 checkpoint 儲存／恢復。 | 完成 GPU 與小批次訓練測試，無 dtype、資料格式或顯存錯誤；實際依賴及版本記錄至 requirements.txt，README 記錄 Python、作業系統、GPU 驅動、安裝指令及 SAM 3 commit。 |
 | 5 | 執行 fine-tuning，保存每個 epoch 的 checkpoint、loss、訓練設定與驗證結果。 | 訓練正常結束；至少保留最佳 validation checkpoint 與最後 checkpoint。 |
-| 6 | 使用從未參與訓練的 test split 推論，計算每類 IoU、Dice、Precision、Recall 並輸出遮罩預覽。 | 產出指標 CSV 與預覽圖；預覽圖能清楚區分 flower、stem、leaf。 |
+| 6 | 完成下方支架遮罩前置工作，使用 test split 推論，依 SPEC 計算每類與 macro 指標、支架誤判比例並輸出預覽。 | CSV 與預覽圖齊全；逐項報告 SPEC 門檻通過與否。任一必須驗收項目（各類 IoU、支架誤判比例）為 N/A 或未達標時，不得宣告整體驗收通過；補充指標仍須完整報告，N/A 須另行說明原因，不另設通過門檻。 |
 | 7 | 將實測指標、限制與可重跑方式寫入 README，並在 DEVLOG 追加完成紀錄。 | README 可使他人重跑；DEVLOG 記錄資料版本、權重與主要結果。 |
+
+### 第 6 步的前置工作：支架評估遮罩
+
+- 在最終 test split 確定後，由人工標註每張測試影像中可見的支架、固定夾、鐵絲與竹竿；遮罩僅供評估，不加入模型訓練類別。
+- 儲存位置：`data/processed/support_eval/test/`。
+- 每張影像對應一張 8-bit 單通道 PNG 遮罩，尺寸與被評估影像一致；像素值僅允許 0（非支架）與 255（支架）。
+- 遮罩原則上使用影像的同檔名主體；若檔名主體重複，加入 image_id 區分，並以 manifest 記錄實際對應，不得覆寫其他影像的遮罩。
+- 確認沒有支架的影像也必須提供全零遮罩；缺少檔案不得視為沒有支架。
+- 在同目錄建立 `manifest.csv`，記錄 split、image_id、影像相對路徑、遮罩相對路徑、人工覆核狀態、覆核者與日期；相對路徑均以專案根目錄為基準。
+- 人工覆核需逐張確認遮罩與影像對應正確、位置對齊、可見支架範圍完整，且未包含花、莖、葉；未完成覆核的遮罩不得視為有效評估標註。
+- 標註以影像內容為準，不依模型預測結果決定支架範圍。
+- 缺少遮罩、未完成覆核、尺寸不符、像素值不合法或對應不明時，支架誤判指標記為 N/A 並回報；全測試集支架像素總數為 0 時亦記為 N/A，不得宣告此項驗收通過。
 
 ## 4. 驗證計畫
 
 除了 `instructions.md` 的通用檢查外，這個任務要特別確認：
 
-- [ ] COCO 的每個 `category_id` 都對應到 `flower`、`stem`、`leaf` 之一。
+- [ ] annotation 實際使用的 `category_id` 僅限 1、2、3，名稱映射符合 SPEC：flower=1、leaf=2、stem=3；類別表中的 0=sam3 可保留，但不得被 annotation 使用。
 - [ ] 訓練、驗證、測試集合沒有相同影像，且近似連拍影像不跨集合。
 - [ ] 每一類在 train、validation、test 都有足夠的有效遮罩；數量不足時停止並回報。
-- [ ] 模型輸出遮罩與原圖尺寸一致，且不發生 CUDA 的 bfloat16/float dtype 衝突。
-- [ ] 報告每類與 macro-average 的 IoU、Dice、Precision、Recall；不得只報單一總分。
+- [ ] 模型輸出遮罩已還原至被評估影像的座標與尺寸；縮放與補邊已正確逆轉，且與真實遮罩對齊。
+- [ ] 依 SPEC 的像素層級計算、全測試集彙總及零分母規則，報告每類與 macro-average 的 IoU、Dice、Precision、Recall；不得只報單一總分。
+- [ ] 依 SPEC 計算全測試集支架像素被誤判為 stem 的比例，確認 < 5%；附上分子、分母與預測預覽。缺少有效評估遮罩或分母為 0 時記為 N/A，不得以目視抽查取代數值驗收。
 - [ ] 人工抽查預測預覽，特別檢查支架或固定夾是否被誤判為 stem。
 
 ## 5. 不確定與風險
 
-- 尚未確認的事項：COCO JSON 的確切檔名、影像與 annotation 的目錄結構、各類樣本數與拍攝群組資訊。
+- area 修復已完成：pycocotools 2.0.11 已複核並修正全部 5,591 筆，後續使用 `data/processed/annotations_area_fixed/{train,valid,test}/`。原始匯出保留不變；其他資料品質與環境驗證仍待完成。
+
+- 已盤點 train／valid／test 為 211／60／30 張、3789／1147／655 筆 annotation，來源與路徑見 data/README.md；尚待驗證遮罩品質、群組資訊與資料洩漏。「足夠樣本」的最低數量尚待確認，不得僅以各類非零宣告統計充分。
 - 可能出錯的地方：原始影像被當成已處理資料、COCO 類別 ID 與名稱不一致、支架被誤標為 stem、資料切分發生影像洩漏、SAM 3 完整微調造成顯存不足。
-- 如果 COCO 內的類別不是 `flower`、`stem`、`leaf`，或任一類缺少有效標註，就停止並詢問。
+- 如果 annotation 引用了 1、2、3 以外的 category_id、類別名稱映射不符合 SPEC，或任一集合缺少任一目標類別的有效標註，就停止並回報。
 - 如果 RTX 5090 上仍發生顯存不足，就停止並回報記憶體用量，再由使用者決定是否降低解析度、採用凍結層或調整訓練策略。
-- 最終的數值驗收門檻尚未由使用者指定；在結果宣告「達標」前，需先確認每類 IoU/Dice 的目標值。
+- 最終的數值驗收門檻flower／stem／leaf IoU ≥ 0.70／0.75／0.80，以及支架誤判 < 5%。
+- 植株／拍攝序列資訊來源：由資料提供者提供的原始拍攝紀錄或影像對照表取得，目前待確認；不得僅憑 Roboflow 匯出檔名推定。
+- 對照表至少包含：影像檔名、植株 ID、拍攝序列 ID；未知項目明確標為待確認。
+- 影像雜湊用於檢查內容完全相同的檔案；近似影像比對與人工檢查作為輔助，不能取代植株／序列紀錄。
+- 若需重新切分，先確認群組對照表，再以植株為群組分配至單一集合，同一拍攝序列不得跨集合。
+- 重新切分時以 70%／20%／10% 為目標，優先確保群組不跨集合及每類資料充足；記錄隨機種子、實際比例與影像清單。
+- 切分方式須在訓練前確定，不得依測試集表現反覆調整。
+- 訓練作業系統、專用環境與套件相容性尚待確認；requirements.txt 於環境測試通過後填入實際版本，不預先宣稱已驗證。
 
 ## 6. 不做什麼
 
@@ -80,3 +103,7 @@
 - 不訓練 YOLO 或其他非 SAM 3 模型。
 - 不加入 root、support、花盆或支架為模型辨識類別。
 - 不在未確認 PLAN 前建立訓練程式、下載權重或開始 fine-tuning。
+
+## 已完成的前置修復：2026-09-29
+
+全部 5,591 筆已通過 COCO area 與 decode 像素加總比對。目前依使用者決定僅保留修正資料及修復紀錄，不保留專案程式碼或修復依賴檔，因此無法重跑 area 修復。後續驗證使用現有 `annotations_area_fixed` 副本；固定備份位置待確認，僅 clone Git 無法重建此輸入。這項可重現性限制須在後續成果中揭露，不得宣告修復流程已可重跑。此項決定不代表整份訓練 PLAN 已審核。

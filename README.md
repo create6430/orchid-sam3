@@ -1,55 +1,55 @@
-# <專案名稱>
+# orchid-sam3：蘭花花、莖、葉分割
 
-一句話說明這個 repo 在做什麼。
+應用於農業機器人之視覺分割自動化：規劃微調 SAM 3，分割 flower、stem、leaf。
 
-## 這個 repo 是什麼
+- 專案負責人：陳彥彣（依 instructions.md）；任務提出者：廖柏任（依 PLAN）。
+- 狀態：SPEC 與 PLAN 草稿整理中，尚未建立訓練與評估腳本，尚無實測結果。
+- 任務建立日期：2026-09-28；結束日期待確認。
 
-- 研究題目：
-- 負責人：
-- 起訖時間：
+## 如何開始
 
-## 怎麼跑一次
+1. 閱讀 [工作規則](instructions.md)、[SPEC](SPEC.md) 與 [PLAN](plans/2026-09-28_sam3_orchid_flower_stem_leaf_finetune.md)。
+2. 依 [資料說明](data/README.md) 準備影像與 COCO JSON。
+3. 確認 PLAN 與訓練平台後，依步驟驗證資料、建立專用環境，再實作訓練。
 
-```bash
-# 環境
-pip install -r requirements.txt
+目前沒有專案程式碼；僅保留 area 修正資料與修復紀錄，無法重跑修復。訓練與評估腳本仍是預定產物。
 
-# 執行主要分析，產生 results/figures/ 底下的圖
-python scripts/2026-09-02_modal_analysis.py
-```
+- area 修復已完成：pycocotools 2.0.11 已複核並修正全部 5,591 筆，後續使用 `data/processed/annotations_area_fixed/{train,valid,test}/`。原始匯出保留不變；其他資料品質與環境驗證仍待完成。
 
-## 資料在哪
+## 環境狀態
 
-原始量測資料**不放在 git**（檔案太大）。
+| 項目 | 狀態 |
+|---|---|
+| 目前本機 Python | 3.13.12；尚未驗證為訓練環境 |
+| 訓練作業系統／專用環境 | 待確認 |
+| 預定 GPU | RTX 5090，32 GB；執行前驗證硬體與可用顯存 |
+| GPU 驅動／CUDA 安裝方式 | 待確認 |
+| SAM 3 來源、commit、基礎權重位置與版本 | 待確認 |
+| PyTorch／torchvision 與其他依賴 | 待專用環境測試後鎖定 |
 
-- 位置：`"D:\my-project\Lab-AI-Template\repo-template\data\raw"` 或 OneDrive 連結
-- 下載後放到 `data/raw/`
-- 資料格式、單位、感測器設定見 [`SPEC.md`](SPEC.md)
+[requirements.txt](requirements.txt) 目前只有待完成說明，安裝它不會建立完整訓練環境。PLAN 第 4 步須完成 GPU 與小批次訓練測試，記錄實際套件版本、安裝指令及以上環境資訊。
 
-## 資料夾說明
+## 資料與成果
 
-```
-├─ CLAUDE.md           Claude Code 的規則指向檔
-├─ instructions.md     給 AI agent 的常駐規則（開工前先讀）
-├─ SPEC.md             單位、座標系、資料格式、感測器規格
-├─ DEVLOG.md           開發流水帳
-├─ requirements.txt    Python 套件
-├─ plans/              每個任務的規劃檔（範本：PLAN_template.md）
-├─ data/
-│   ├─ raw/            原始資料（唯讀，不進 git）
-│   └─ processed/      處理後資料（不進 git）
-├─ src/                可重複使用的函式
-├─ scripts/            一次性執行腳本
-└─ results/
-    ├─ figures/        圖檔，300 dpi，座標軸須標單位
-    └─ tables/         表格 CSV
-```
+- `data/raw/`：匯入影像，唯讀，不進 Git。
+- `data/processed/annotations/`：COCO 匯出資料，train／valid／test 為 211／60／30 張，不進 Git。
+- `data/processed/support_eval/test/`：待人工準備的支架評估遮罩與 manifest。
+- `scripts/`、`src/`：預定執行入口與共用函式。
+- `results/figures/`、`results/tables/`：預定可重現圖表。
+- `results/models/`：預定 checkpoint 與設定副本；權重不進 Git，設定檔保留版本控制。
 
-## 給 AI agent 使用者
+驗收依 SPEC 的每類 IoU 與支架像素誤判比例，目前尚未驗收。
 
-本 repo 採用 plan-first 流程。使用任何 AI coding agent 前，請先讓它讀 [`instructions.md`](instructions.md)：
+## Agent 與變更紀錄
 
-- **Claude Code**：`CLAUDE.md` 內已指向，直接開始即可
-- **GitHub Copilot**：`.github/copilot-instructions.md` 內已指向
-- **Cursor**：`.cursor/rules/main.mdc` 內已指向
-- **網頁版 ChatGPT / Gemini**：把 `instructions.md` 整份貼在對話第一則訊息
+Claude Code、Copilot、Cursor 的指向檔均指向 [instructions.md](instructions.md)。其他工具使用前也須讀取該檔及 SPEC。
+
+進度與決策記錄在 [DEVLOG.md](DEVLOG.md)，僅追加，不重寫歷史。
+
+
+
+## area 修正資料的保存限制
+
+依使用者決定，目前不保留修復腳本與專用依賴檔。修正資料位於 `data/processed/annotations_area_fixed/`，其中的 `area_changes.csv` 與 `repair_manifest.json` 記錄逐筆差異、來源雜湊及當時套件版本；這些紀錄不能代替可執行的修復程式。
+
+資料目錄不進 Git，僅 clone 本專案無法取得或重建修正副本。固定備份位置尚待確認；須另行備份完整修正資料及紀錄，遺失時需重新建立修復流程。
