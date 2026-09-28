@@ -52,7 +52,7 @@
 | 欄名 | 意義 | 單位 | 備註 |
 |---|---|---|---|
 | `image_id` | 影像編號 | 整數 | 對應影像檔 |
-| `category_id` | 類別編號 | 整數 | root=0、stem=1、leaf=2 |
+| `category_id` | 類別編號 | 整數 | flower=1 stem=2 leaf=3 |
 | `segmentation` | 物件遮罩 | px | COCO polygon 或 RLE 格式 |
 | `bbox` | 物件外接框 | px | `[x, y, width, height]` |
 | `area` | 遮罩面積 | px² | 遮罩所覆蓋的像素數 |
