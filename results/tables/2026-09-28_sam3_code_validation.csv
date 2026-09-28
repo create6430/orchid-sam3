@@ -1,0 +1,12 @@
+check,status,value,detail
+python_syntax,PASS,11,AST parse of all project scripts and orchid_sam3 modules
+cpu_regression_tests,PASS,8,pytest tests/test_orchid_pipeline.py; real masks and count arithmetic; no model predictions
+smoke_validation_class_coverage,PASS,2,Real valid image IDs 0 and 1 cover all three annotated classes; first image alone lacks stem
+configuration_prepare,PASS,1,prepare-only on pinned SAM3 source; no checkpoint supplied; no GPU used
+source_api_check,PASS,2345a4ad109ac29c569da749c91d84f10dc08c40,Referenced official configuration targets found by AST inspection
+mask_data_quality,PASS,5591,Existing corrected COCO masks decoded and area checked
+numpy_compatibility,INFO,2.5.3,Local CPU environment emits pycocotools deprecation warnings; training requires separate numpy<2 environment
+gpu_forward_backward,PENDING,,RTX 5090 and base weights unavailable locally
+checkpoint_save_resume,PENDING,,Implementation provided; requires target-machine smoke and resume runs
+test_metrics_and_preview,PENDING,,No model inference performed; no fabricated metrics or predicted masks
+formal_model_acceptance,PENDING,,Requires real model metrics and reviewed support masks; capture-sequence provenance unavailable

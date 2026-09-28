@@ -8,6 +8,7 @@ data/processed/*
 __pycache__/
 *.py[cod]
 .venv/
+.venv-train/
 venv/
 .ipynb_checkpoints/
 
@@ -34,3 +35,9 @@ Thumbs.db
 # Logs and OS files
 logs/
 ._*
+
+# Derived COCO training inputs and local configuration smoke check
+results/models/*/inputs/
+results/models/config_check/
+.pytest_cache/
+pytest-cache-files-*/

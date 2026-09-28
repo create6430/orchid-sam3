@@ -1,0 +1,12 @@
+﻿check,status,value,detail
+algorithm,INFO,dhash64/phash63,OR thresholds: 8/10; RGB pixel SHA256 includes dimensions; no randomization
+environment,INFO,3.13.12,numpy=2.5.3; Pillow=12.3.0
+split_count,PASS,211,train: expected 211
+split_count,PASS,60,valid: expected 60
+split_count,PASS,30,test: expected 30
+group_provenance,PENDING,301,No plant/sequence mapping supplied; cannot confirm split independence
+cross_split_pairs,INFO,20790,All cross-split image pairs compared
+exact_duplicates,PASS,0,File SHA256 or decoded RGB SHA256 equality
+near_candidates,INFO,102,Heuristic only; review and group provenance required
+near_review,PENDING,102,Candidates awaiting valid human review; absence of candidates is not proof of independence
+overall,PENDING,301,Step 3 only; original splits unchanged; no training authorized by this result

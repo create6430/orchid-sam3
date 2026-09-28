@@ -1,0 +1,12 @@
+# Candidate Linux / Python 3.12 environment, NOT a GPU-validated lock file.
+# Install torch==2.10.0 and torchvision==0.25.0 from the cu128 index first.
+# Install the pinned official sam3 checkout with its [train] extras separately.
+numpy>=1.26,<2
+setuptools>=61,<81
+pycocotools==2.0.11
+Pillow>=10
+matplotlib>=3.8
+einops
+decord
+psutil
+pytest>=8

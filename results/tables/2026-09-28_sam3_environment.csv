@@ -1,0 +1,13 @@
+﻿check,status,value,detail
+python,INFO,3.13.12,D:\my-project\orchid-sam3\.venv\Scripts\python.exe
+os,INFO,Windows-11-10.0.26200-SP0,
+gpu_0,INFO,NVIDIA GeForce RTX 3080,total_memory_MiB=10240; driver=616.92
+planned_gpu,FAIL,RTX 5090,SPEC requires RTX 5090; no automatic batch-size or resolution changes
+torch,FAIL,not installed,
+torchvision,FAIL,not installed,
+sam3,FAIL,not installed,
+torch_runtime,FAIL,ModuleNotFoundError,No module named 'torch'
+sam3_source,PENDING,not supplied,Use --sam3-repo to record the source commit
+checkpoint,PENDING,missing,Supply an existing SAM 3 base checkpoint with --checkpoint
+training_dry_run,PENDING,not executed,"Requires real training batch=4, bf16 autocast, forward/backward, checkpoint save/resume"
+overall,FAIL,step 4 incomplete,This script inventories prerequisites only

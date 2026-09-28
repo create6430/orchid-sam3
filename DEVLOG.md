@@ -76,3 +76,77 @@
 - 為什麼這樣做：避免讀錯資料版本，或將已修正副本誤認為仍有原始 area 錯誤。
 - 結果：文件與 PLAN 的輸入路徑一致；本次沒有新增程式碼或修改資料，修復流程仍無法重跑。
 - 下一步：另行備份修正資料，依 PLAN 完成其餘資料品質與環境驗證。
+
+## 2026-09-29 ｜ 實作 PLAN 第 1 步 COCO 盤點
+
+- 授權：使用者要求按照 PLAN 在 scripts 撰寫程式；依逐步執行規則先完成第 1 步。
+- 做了什麼：新增 scripts/2026-09-28_validate_orchid_coco.py，使用 Python 標準函式庫唯讀檢查修正副本的類別映射、各類標註數及影像引用；輸出 results/tables/2026-09-28_orchid_coco_inventory.csv，包含來源 JSON SHA-256 與錯誤明細。失敗回傳非零退出碼，報告限定寫入 results/tables。
+- 重跑：在專案根目錄執行 `.venv/Scripts/python.exe scripts/2026-09-28_validate_orchid_coco.py`；亦可使用一般 Python 3.9 以上版本，不需額外套件。
+- 結果：實際執行退出碼 0。train／valid／test 為 211／60／30 張、3789／1147／655 筆標註；flower 分別 1715／553／359，leaf 為 910／231／132，stem 為 1164／363／164。三個集合類別映射符合 SPEC，所有 annotation 均對應存在的影像檔案；0=sam3 未被引用。
+- 合理性檢查：單位為影像與標註筆數，未轉換座標或面積；數量級與既有資料紀錄一致，分類加總為 5591；邊界條件符合 SPEC 類別與 JSON 相對路徑。能量／質量守恆及物理極端條件不適用；無解析解對照，既有數量紀錄僅供交叉核對，不代表標註品質正確。
+- 限制：未修改資料；尚未驗證遮罩、影像解碼、近似影像、群組洩漏或樣本充分性，未建立 SAM 3 訓練環境及訓練／評估入口。README 既有使用者修改保留不動。既有 area 修復仍無可重跑程式。
+- 下一步：依專案逐步確認規則，確認後進行 PLAN 第 2 步，擴充遮罩格式、尺寸、空遮罩與損毀影像的驗證。
+
+## 2026-09-29 ｜ 完成 PLAN 第 2 步資料品質驗證
+
+- 授權：使用者回覆「繼續」，接續第 2 步。
+- 做了什麼：擴充 scripts/2026-09-28_validate_orchid_coco.py，新增 `--quality`；維持原本不需額外套件的第 1 步模式。逐張以 Pillow verify 與重新開啟後 load 檢查檔案結構、完整解碼及尺寸；同份 JSON 的 image ID 不得重複，不同集合各自處理。逐筆驗證 COCO polygon／RLE 格式、RLE 尺寸與游程長度、非空二元遮罩、修正 area 與解碼面積一致性；原始資料維持唯讀。
+- 輸出：results/tables/2026-09-28_orchid_coco_quality.csv，包含每張影像、每筆遮罩的結果、面積（px²）、來源 JSON SHA-256、環境版本及各類有效遮罩統計；錯誤逐項列出且退出碼非零。
+- 環境：Windows、Python 3.13.12；使用既有 numpy 2.5.3／pycocotools 2.0.11，於專案 .venv 新增 Pillow 12.3.0。這是資料驗證環境，不代表 SAM 3 或 GPU 訓練環境已驗證。資料驗證依賴安裝指令已放在腳本說明，requirements.txt 仍依第 4 步保留待訓練環境驗證狀態。
+- 重跑：在專案根目錄執行 `.venv/Scripts/python.exe scripts/2026-09-28_validate_orchid_coco.py --quality`。
+- 結果：退出碼 0；301 張影像全部可解碼、尺寸均符合 JSON，無同份 JSON 內重複 image ID；5591 筆遮罩全部為壓縮 RLE、非空，area 全部等於解碼像素加總。train／valid／test 有效遮罩分別為 3789／1147／655，各集合三類皆有有效遮罩。
+- 驗證：CSV 的 301 筆影像、5591 筆遮罩及 3 筆集合通過紀錄一致；以實際原始匯出作反向檢查，正確抓出全部 5591 筆既有 area 錯誤及其衍生的 9 筆集合／類別無通過遮罩錯誤。每集合取一筆真實 RLE 轉成未壓縮游程，確認兩種格式解碼面積一致；缺少輸入會回報 FAIL，寫入 data/raw 的報告路徑會被拒絕（退出碼 2）。沒有產生假影像或假標註。
+- 合理性檢查：尺寸以 px、面積以 px² 表示，未縮放、補邊或轉換座標；資料數量與第 1 步相符，遮罩面積大於 0 且不超過影像像素數。RLE 總長度與影像大小一致，前景游程加總、COCO area、解碼像素數互相吻合。物理能量／質量守恆及力學極端條件不適用；無解析解，使用正式 COCO 解碼及既有錯誤副本交叉核對。
+- 限制：現有資料沒有 polygon，該分支尚無真實 polygon 資料驗證；標註語意仍需人工確認。有效遮罩非零不代表樣本數統計充分。近似影像、植株／序列洩漏、支架遮罩、訓練環境與模型驗收均不在本步通過範圍。
+- 參考：COCO RLE 格式依 https://github.com/cocodataset/cocoapi/blob/master/common/maskApi.c；影像檢查依 https://pillow.readthedocs.io/en/stable/reference/Image.html。
+- 下一步：依逐步確認規則，在使用者確認後執行第 3 步，輸出既有切分清單並檢查跨集合重複／近似影像；仍需資料提供者提供植株與拍攝序列對照表，缺少時不得宣告資料洩漏檢查通過。
+
+## 2026-09-29 ｜ 實作 PLAN 第 3 步切分與洩漏檢查，等待來源與人工覆核
+
+- 授權：使用者再次回覆「繼續」，接續第 3 步；已先說明本步產物超過三個檔案。
+- 做了什麼：新增 scripts/2026-09-28_check_orchid_splits.py，保存修正副本既有 train／valid／test 清單至 data/processed/splits/2026-09-28_orchid_split_manifest.csv；記錄 JSON SHA-256、檔案 SHA-256、含尺寸的 RGB 像素 SHA-256、影像 ID 與路徑。新增 checks／pairs CSV 與 HTML 並排覆核頁，並於 scripts/README.md 記錄執行、門檻及人工輸入格式。未改動影像、標註、切分或使用者既有 README 修改。
+- 比對方式：窮舉跨集合影像配對；檔案或 RGB 像素雜湊相同視為完全重複。近似候選使用 dHash 64 位元與 DCT pHash 63 位元（排除 DC），漢明距離 ≤8 或 ≤10 列入候選；使用包含補邊的完整匯出影像與 LANCZOS 縮圖，無隨機抽樣。門檻僅為輔助篩選，可由參數調整並記錄，不代表通過來源獨立性驗收。
+- 結果：原始清單保持 211／60／30 張；比對 20790 組跨集合配對，完全重複為 0，近似候選為 102 組（train-valid 68、train-test 29、valid-test 5）。近似不是已證實洩漏，全部標記待人工覆核；植株／拍攝序列 ID 留空，未依檔名或外觀推定。
+- 狀態：第 3 步尚未驗收，overall=PENDING、退出碼 1。未找到來源對照表，已向使用者詢問路徑；未開始第 4 步環境建置或訓練。
+- 驗證：清單的 301 個 split/image_id 唯一鍵與全部來源影像／JSON 雜湊一致；102 組 pair_id 不重複且均跨集合；HTML 的 204 個影像連結均可解析至既有檔案。使用真實但來源 ID 空白的 manifest 測試來源檢查，確認回傳待確認；未提供人工覆核時 102 組均保持待確認。重跑四份產物的 SHA-256 完全一致；以產出作為覆核輸入會被拒絕（退出碼 2），且產物不變。未製造假影像、假遮罩或假群組資料。
+- 合理性檢查：尺寸單位 px，雜湊距離單位 bit；配對數 211×60＋211×30＋60×30＝20790，與窮舉結果一致。每張影像保持原集合與 ID，未重新取樣或轉換 COCO 座標；只在記憶體縮圖計算感知雜湊。能量／質量守恆與力學極端情況不適用；沒有解析解或已標註的近似影像標準答案，不能估計篩選召回率。邊界檢查確認缺少來源／覆核不能通過。
+- 限制與下一步：需資料提供者提供涵蓋全部影像、ID 跨集合一致的植株／序列紀錄，以及人工覆核 102 組候選。感知雜湊可能漏掉裁切、旋轉或不同視角的同源影像；無完全重複不等於沒有洩漏。取得資料後以 --groups／--reviews 重跑第 3 步；如確認同源跨集合，依 PLAN 先確認群組重切方案，不自行更動切分。
+
+## 2026-09-29 ｜ 記錄使用者人工覆核結論：無重複植株
+
+- 使用者回覆：先確認「無來源」，隨後表示「以人工覆核，無重複植株」。
+- 做了什麼：在 PLAN 第 3 步補充中記錄採用此人工覆核結論作為植株重複檢查依據；覆核依據為本次對話，未推定覆核者姓名或製造來源 ID。
+- 結果：人工覆核結論為無重複植株。先前自動檢查的 0 組完全重複及 102 組近似候選結果維持原樣；未將整體人工陳述改寫成逐對來源判定，也未手動修改自動 CSV 的 PENDING。
+- 驗證與限制：本次只更新文字紀錄，不改動資料、切分、演算法或數值結果，因此物理量、守恆與極端條件檢查不適用。沒有來源對照表或逐對覆核紀錄，拍攝序列來源仍未驗證；後續成果須保留這項限制。
+
+## 2026-09-29 ? ? 4 ????????????????
+
+- ????????????????????????????????????????? 4 ????????
+- ??????? scripts/2026-09-28_check_sam3_environment.py ? results/tables/2026-09-28_sam3_environment.csv??? Python?OS?GPU???????SAM 3 ??? commit ???????????????????? GPU ????????
+- ??????????? `python scripts/2026-09-28_check_sam3_environment.py --sam3-repo <SAM3?????> --checkpoint <????>` ???
+- ?????Windows 11?Python 3.13.12?GPU ? RTX 3080?10240 MiB??? 616.92?? SPEC ? RTX 5090 ????? .venv ??? torch?torchvision?sam3?data?results?src ??? pt?pth?ckpt?safetensors ?????? SAM 3 ????????? 1?overall=FAIL?? 4 ?????
+- ??????? https://github.com/facebookresearch/sam3 ???????????????? Hugging Face ?????????????????? SAM 3 commit??????????????????????
+- ??????????????????????????? CUDA ????????? toolkit??????? MiB??? batch size????? SPEC????????????????????????????????????bf16???? checkpoint ????????
+- ?????????? 5090 ???????? SAM 3 ????????????????????????????????????????????????????????
+
+## 2026-09-29 ｜ 完成可搬移的 SAM 3 訓練／評估程式，GPU 實測待執行
+
+- 授權：使用者明確要求「先完成程式，之後才會搬到訓練機執行」；因此完成第 4–7 步的程式準備與操作文件，不啟動本機模型訓練或下載權重。
+- 前筆編碼補正：前一筆環境檢查紀錄經 PowerShell 管線寫入時中文變成問號，保留歷史並在此補正：本機為 Windows 11、Python 3.13.12、RTX 3080 10240 MiB、驅動 616.92；.venv 未安裝 PyTorch／SAM 3，未取得模型權重，第 4 步 GPU 驗證未完成。
+- 實作：新增 train／evaluate 腳本及 src/orchid_sam3 共用模組；使用官方 Trainer、完整模型微調、instance mask loss、batch size 4、gradient accumulation 1、bfloat16、1008 px、10 epochs。每 epoch 用完整 valid 的像素 macro IoU 選 best，保留每 epoch／最後 checkpoint、optimizer／scaler／RNG 狀態與 loss 紀錄；test 僅供最終評估。
+- 來源：唯讀核對官方 SAM 3 commit 2345a4ad109ac29c569da749c91d84f10dc08c40（工作區 D:/my-project/sam3-reference，供核對使用，不是訓練安裝）。程式驗證固定 checkout，適配官方 detector 前綴與微調 checkpoint，strict 載入避免漏載；未修改第三方原始碼。上游完整環境變數日誌停用，改保存明確選定的硬體／套件資訊。
+- 資料：訓練衍生 JSON 僅移除未使用的 0=sam3 類別列，image／annotation 完全保留；原資料唯讀。固定 square resize、不隨機增強、保留三類負查詢。輸出保存資料、基礎權重與共用程式 SHA-256，恢復時檢查一致性。
+- 評估：按 SPEC 在原 COCO 尺寸上彙總同類遮罩聯集的 TP／FP／FN，分數門檻含等號 0.35；輸出各類與 macro IoU／Dice／Precision／Recall，零分母記 N/A。支架 manifest 逐張驗證路徑、人工覆核、尺寸、單通道 PNG 與 0／255 值，缺漏或零分母不通過。預覽程式輸出 300 dpi、像素座標及支架／stem 交集；尚未實際推論或產生預覽。
+- 文件：更新 README、scripts/README、PLAN，提供 Linux／WSL2 Python 3.12 候選安裝、設定準備、4 張真實 train 影像 smoke test、resume、正式訓練與評估指令。新增 requirements-training.txt；既有 requirements.txt 保留未經 GPU 驗證的狀態。固定版 SAM 3 要求 numpy<2，勿搬移本機 NumPy 2.5.3 環境。
+- 驗證：prepare-only 成功產生本機設定；7 項 CPU 測試全數通過（無 skip），包含真實 test 遮罩讀取／面積、公式與 N/A、支架缺漏、原始錯誤 area 拒絕、輸出路徑、官方目標函式存在與 train/valid 設定、衍生 JSON 一致性。11 個 Python 檔案 AST 語法通過，git diff --check 通過；結果表位於 results/tables/2026-09-28_sam3_code_validation.csv。本機 pycocotools 搭 NumPy 2.5.3 有既有 array-copy deprecation warnings，沒有將其忽略為訓練環境相容性證明。
+- 合理性：尺寸 px、面積 px²、一般指標 0–1、支架比例百分比；資料計數與先前一致。零分母與缺失支架狀態有測試。守恆與力學極端條件不適用；沒有模型解析解，真實遮罩自我比對僅驗證程式一致性，不是模型表現。
+- 限制：尚未在 RTX 5090 執行 GPU 前向／反向、bf16、顯存、checkpoint 恢復或最終推論；不宣告第 4–6 步實測通過。來源限制保留：使用者人工覆核无重複植株，但拍攝序列來源與逐對覆核表缺失。SPEC.md 的使用者現有編輯保留未改。
+- 下一步：搬移完整修正資料，在訓練機依 scripts/README 執行 smoke 與 resume，成功後再跑正式訓練與 test 評估；人工提供支架遮罩並檢視預覽。目標機實測後才鎖定完整依賴與記錄模型指標。
+
+## 2026-09-29 ｜ 搬移前修正 smoke validation 缺類問題
+
+- 做了什麼：檢查訓練／恢復銜接與評估邏輯，發現原 smoke 模式只取 valid 第一張，而真實 image_id=0 僅有 flower／leaf、沒有 stem；若 stem 預測亦為空，macro IoU 會為 N/A，造成小批次測試非必要中止。
+- 修正：smoke validation 改為按 image ID 順序選取涵蓋三類標註的最小前綴，實際為 image_id 0、1。執行時保存 smoke_validation_images.json；正式 valid 與 test 仍使用完整集合，不修改任何資料或 SPEC 指標。同步更新 CLI 與操作說明。
+- 驗證：新增真實 valid 資料的類別覆蓋、最小前綴與重現性測試；共 8 項 CPU 測試通過、無 skip。更新 results/tables/2026-09-28_sam3_code_validation.csv。既有 NumPy／pycocotools deprecation warnings 仍存在。
+- 合理性：只調整程式 smoke 測試取樣；三類皆有非空真實標註時，各類 IoU 聯集分母必大於零。不變更數值公式、面積或座標；物理守恆／力學極端條件不適用。沒有產生假資料或模型結果。
+- 限制與下一步：GPU 前向／反向、checkpoint 儲存恢復與實際推論仍待訓練機驗證。共用程式雜湊已變更，舊設定準備結果應重跑；若已存在用舊程式建立的 checkpoint，不繞過恢復一致性保護。

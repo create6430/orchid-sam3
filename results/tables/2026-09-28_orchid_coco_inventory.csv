@@ -1,0 +1,31 @@
+﻿split,source_json,source_sha256,record_type,item,value,status,detail
+train,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\train\_annotations.coco.json,a0fd7d1ca18f8ad827c6ab5aea923c1d78954b12e01e8e81d43f79f81301e009,summary,images,211,INFO,
+train,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\train\_annotations.coco.json,a0fd7d1ca18f8ad827c6ab5aea923c1d78954b12e01e8e81d43f79f81301e009,summary,existing_image_ids,211,INFO,
+train,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\train\_annotations.coco.json,a0fd7d1ca18f8ad827c6ab5aea923c1d78954b12e01e8e81d43f79f81301e009,summary,annotations,3789,INFO,
+train,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\train\_annotations.coco.json,a0fd7d1ca18f8ad827c6ab5aea923c1d78954b12e01e8e81d43f79f81301e009,class_annotations,flower,1715,INFO,category_id=1
+train,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\train\_annotations.coco.json,a0fd7d1ca18f8ad827c6ab5aea923c1d78954b12e01e8e81d43f79f81301e009,class_images,flower,209,INFO,
+train,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\train\_annotations.coco.json,a0fd7d1ca18f8ad827c6ab5aea923c1d78954b12e01e8e81d43f79f81301e009,class_annotations,leaf,910,INFO,category_id=2
+train,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\train\_annotations.coco.json,a0fd7d1ca18f8ad827c6ab5aea923c1d78954b12e01e8e81d43f79f81301e009,class_images,leaf,115,INFO,
+train,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\train\_annotations.coco.json,a0fd7d1ca18f8ad827c6ab5aea923c1d78954b12e01e8e81d43f79f81301e009,class_annotations,stem,1164,INFO,category_id=3
+train,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\train\_annotations.coco.json,a0fd7d1ca18f8ad827c6ab5aea923c1d78954b12e01e8e81d43f79f81301e009,class_images,stem,195,INFO,
+train,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\train\_annotations.coco.json,a0fd7d1ca18f8ad827c6ab5aea923c1d78954b12e01e8e81d43f79f81301e009,check,inventory,,PASS,"Step 1 only; mask validity, sample sufficiency and leakage not evaluated"
+valid,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\valid\_annotations.coco.json,bd5cb055f40eb27518723636ae2f0a389e6b7476c6c6bc43a47d6fd82839cdb5,summary,images,60,INFO,
+valid,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\valid\_annotations.coco.json,bd5cb055f40eb27518723636ae2f0a389e6b7476c6c6bc43a47d6fd82839cdb5,summary,existing_image_ids,60,INFO,
+valid,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\valid\_annotations.coco.json,bd5cb055f40eb27518723636ae2f0a389e6b7476c6c6bc43a47d6fd82839cdb5,summary,annotations,1147,INFO,
+valid,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\valid\_annotations.coco.json,bd5cb055f40eb27518723636ae2f0a389e6b7476c6c6bc43a47d6fd82839cdb5,class_annotations,flower,553,INFO,category_id=1
+valid,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\valid\_annotations.coco.json,bd5cb055f40eb27518723636ae2f0a389e6b7476c6c6bc43a47d6fd82839cdb5,class_images,flower,60,INFO,
+valid,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\valid\_annotations.coco.json,bd5cb055f40eb27518723636ae2f0a389e6b7476c6c6bc43a47d6fd82839cdb5,class_annotations,leaf,231,INFO,category_id=2
+valid,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\valid\_annotations.coco.json,bd5cb055f40eb27518723636ae2f0a389e6b7476c6c6bc43a47d6fd82839cdb5,class_images,leaf,37,INFO,
+valid,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\valid\_annotations.coco.json,bd5cb055f40eb27518723636ae2f0a389e6b7476c6c6bc43a47d6fd82839cdb5,class_annotations,stem,363,INFO,category_id=3
+valid,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\valid\_annotations.coco.json,bd5cb055f40eb27518723636ae2f0a389e6b7476c6c6bc43a47d6fd82839cdb5,class_images,stem,56,INFO,
+valid,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\valid\_annotations.coco.json,bd5cb055f40eb27518723636ae2f0a389e6b7476c6c6bc43a47d6fd82839cdb5,check,inventory,,PASS,"Step 1 only; mask validity, sample sufficiency and leakage not evaluated"
+test,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\test\_annotations.coco.json,2695b851f75664318c1d5175f9b79e4fb254fc4f149bbe88b8a153fd54bf1dd9,summary,images,30,INFO,
+test,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\test\_annotations.coco.json,2695b851f75664318c1d5175f9b79e4fb254fc4f149bbe88b8a153fd54bf1dd9,summary,existing_image_ids,30,INFO,
+test,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\test\_annotations.coco.json,2695b851f75664318c1d5175f9b79e4fb254fc4f149bbe88b8a153fd54bf1dd9,summary,annotations,655,INFO,
+test,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\test\_annotations.coco.json,2695b851f75664318c1d5175f9b79e4fb254fc4f149bbe88b8a153fd54bf1dd9,class_annotations,flower,359,INFO,category_id=1
+test,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\test\_annotations.coco.json,2695b851f75664318c1d5175f9b79e4fb254fc4f149bbe88b8a153fd54bf1dd9,class_images,flower,30,INFO,
+test,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\test\_annotations.coco.json,2695b851f75664318c1d5175f9b79e4fb254fc4f149bbe88b8a153fd54bf1dd9,class_annotations,leaf,132,INFO,category_id=2
+test,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\test\_annotations.coco.json,2695b851f75664318c1d5175f9b79e4fb254fc4f149bbe88b8a153fd54bf1dd9,class_images,leaf,15,INFO,
+test,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\test\_annotations.coco.json,2695b851f75664318c1d5175f9b79e4fb254fc4f149bbe88b8a153fd54bf1dd9,class_annotations,stem,164,INFO,category_id=3
+test,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\test\_annotations.coco.json,2695b851f75664318c1d5175f9b79e4fb254fc4f149bbe88b8a153fd54bf1dd9,class_images,stem,29,INFO,
+test,D:\my-project\orchid-sam3\data\processed\annotations_area_fixed\test\_annotations.coco.json,2695b851f75664318c1d5175f9b79e4fb254fc4f149bbe88b8a153fd54bf1dd9,check,inventory,,PASS,"Step 1 only; mask validity, sample sufficiency and leakage not evaluated"
