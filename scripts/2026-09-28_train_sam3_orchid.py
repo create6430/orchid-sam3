@@ -20,10 +20,14 @@ def main():
     parser.add_argument("--run-name", required=True)
     parser.add_argument("--prepare-only", action="store_true", help="Generate/check configuration; no torch/GPU required")
     parser.add_argument("--smoke-test", action="store_true", help="4 train images, smallest valid prefix covering all classes; default 1 epoch")
+    parser.add_argument("--smoke-batch-size", type=int, choices=range(1, 5), help="Smoke only: batch size 1-4; default remains 4")
     parser.add_argument("--epochs", type=int, help="Default 10 (1 for smoke test)")
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--resume", action="store_true", help="Resume this run's checkpoints/checkpoint.pt")
     args = parser.parse_args()
+    if args.smoke_batch_size is not None and not args.smoke_test:
+        parser.error("--smoke-batch-size requires --smoke-test")
+    batch_size = args.smoke_batch_size if args.smoke_batch_size is not None else 4
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", args.run_name):
         parser.error("run-name must use letters, digits, underscore or hyphen")
     epochs = args.epochs if args.epochs is not None else (1 if args.smoke_test else 10)
@@ -49,7 +53,7 @@ def main():
     source = ROOT / "data/processed/annotations_area_fixed"
     train, valid = [CocoSplit(source / split / "_annotations.coco.json") for split in ("train", "valid")]
     signature = {"sam3_commit": SAM3_COMMIT, "train": train.fingerprint(), "valid": valid.fingerprint(),
-                 "smoke": args.smoke_test, "batch_size": 4, "resolution": 1008,
+                 "smoke": args.smoke_test, "batch_size": batch_size, "resolution": 1008,
                  "base_sha256": file_hash(checkpoint) if checkpoint and checkpoint.is_file() else None,
                  "implementation": {p.name: file_hash(p) for p in sorted((ROOT / "src/orchid_sam3").glob("*.py"))}}
     metadata = run / "input_signature.json"
@@ -62,7 +66,7 @@ def main():
     train_json = run / "inputs/train.coco.json"
     write_json(train_json, train_copy)
     cfg = make_config(repo, run, checkpoint, train_json, train.path.parent, valid.path,
-                      epochs=epochs, workers=args.workers, smoke=args.smoke_test)
+                      epochs=epochs, workers=args.workers, smoke=args.smoke_test, smoke_batch_size=args.smoke_batch_size)
     if args.resume:
         cfg.trainer.checkpoint.resume_from = str(last)
     OmegaConf.save(cfg, run / "config_resolved.yaml")
@@ -77,7 +81,7 @@ def main():
         print(f"Configuration prepared: {run}; GPU training/checkpoint runtime NOT validated")
         return 0
     from orchid_sam3.runtime import require_runtime
-    environment = require_runtime(repo)
+    environment = require_runtime(repo, smoke=args.smoke_test)
     write_json(run / "environment.json", environment)
     (run / "requirements.actual.txt").write_text(subprocess.check_output(
         [sys.executable, "-m", "pip", "freeze"], text=True), encoding="utf-8")
@@ -103,7 +107,7 @@ def main():
         while cause is not None:
             if isinstance(cause, torch.cuda.OutOfMemoryError):
                 write_json(run / "oom.json", {"allocated_bytes": torch.cuda.memory_allocated(),
-                           "reserved_bytes": torch.cuda.memory_reserved(), "batch_size": 4, "resolution": 1008})
+                           "reserved_bytes": torch.cuda.memory_reserved(), "batch_size": batch_size, "resolution": 1008})
                 break
             cause = cause.__cause__
         write_json(run / "failure.json", {"error_type": type(exc).__name__, "message": str(exc)})

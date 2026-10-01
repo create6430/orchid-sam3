@@ -1,0 +1,19 @@
+{
+  "status": "FAIL",
+  "interpretation": "Functional acceptance incomplete; not proof of a training logic defect",
+  "name": "Development-machine Functional GPU Smoke Test",
+  "run": "D:\\my-project\\orchid-sam3\\results\\models\\smoke_transfer_20261001",
+  "phases": {
+    "initial": {
+      "status": "TIMEOUT",
+      "exit_code": -15,
+      "pid": 522,
+      "last_stage": "forward_start"
+    },
+    "resume": {
+      "status": "NOT_RUN"
+    }
+  },
+  "formal_training_started": false,
+  "reason": "Both phases must exit successfully before checkpoint/content acceptance can PASS"
+}

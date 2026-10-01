@@ -1,13 +1,16 @@
 ﻿check,status,value,detail
-python,INFO,3.13.12,D:\my-project\orchid-sam3\.venv\Scripts\python.exe
-os,INFO,Windows-11-10.0.26200-SP0,
+python,INFO,3.12.14,/mnt/d/my-project/orchid-sam3/.venv-train/bin/python
+os,INFO,Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43,
 gpu_0,INFO,NVIDIA GeForce RTX 3080,total_memory_MiB=10240; driver=616.92
-planned_gpu,FAIL,RTX 5090,SPEC requires RTX 5090; no automatic batch-size or resolution changes
-torch,FAIL,not installed,
-torchvision,FAIL,not installed,
-sam3,FAIL,not installed,
-torch_runtime,FAIL,ModuleNotFoundError,No module named 'torch'
-sam3_source,PENDING,not supplied,Use --sam3-repo to record the source commit
+planned_gpu,PASS,NVIDIA GeForce RTX 5090 / NVIDIA GeForce RTX 3080,Smoke permits RTX 3080; formal training still requires RTX 5090
+torch,INFO,2.10.0+cu128,Installed version; import/runtime tested separately
+torchvision,INFO,0.25.0+cu128,Installed version; import/runtime tested separately
+sam3,INFO,0.1.0,Installed version; import/runtime tested separately
+torchvision_import,PASS,0.25.0+cu128,
+torch_cuda,PASS,12.8,PyTorch build CUDA version; nvidia-smi driver capability is not an installed toolkit
+torch_gpu_0,INFO,NVIDIA GeForce RTX 3080,"capability=(8, 6); bf16=True"
+target_bf16,PASS,True,
+sam3_source,INFO,2345a4ad109ac29c569da749c91d84f10dc08c40,/mnt/d/my-project/sam3-reference; dirty=False; installed package/source alignment still requires dry run
 checkpoint,PENDING,missing,Supply an existing SAM 3 base checkpoint with --checkpoint
-training_dry_run,PENDING,not executed,"Requires real training batch=4, bf16 autocast, forward/backward, checkpoint save/resume"
-overall,FAIL,step 4 incomplete,This script inventories prerequisites only
+training_dry_run,PENDING,not executed,"Requires real training with recorded batch size, bf16 autocast, forward/backward, checkpoint save/resume"
+overall,PENDING,step 4 incomplete,This script inventories prerequisites only

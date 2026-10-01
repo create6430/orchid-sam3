@@ -1,0 +1,16 @@
+﻿item,status,evidence
+Development-machine Functional Smoke Test,FAIL,Current two-phase acceptance incomplete; no claim of a proven code defect
+Known RTX 3080 / WSL Limitation,RECORDED,Forward did not return within 900s; residency errors; no captured PyTorch OOM
+Ready to transfer to lab machine,NO,"Files and environment information prepared, but functional PASS gate unmet"
+Target-machine Smoke Test,NOT_RUN,No RTX5090 training executed
+Clean WSL context,PASS,Shutdown succeeded and boot ID changed
+Pretrained and runtime,PASS,Real SAM3 checkpoint/model initialization and RTX3080 runtime completed
+Dataset / pairing / mapping,PASS,Real COCO quality report passed; flower=1 leaf=2 stem=3
+DataLoader,PASS,First real batch reached original Trainer._step
+Forward,TIMEOUT,First forward entered; no completion after 900s
+Loss / backward / optimizer step,NOT_REACHED,No completed iteration
+Validation / checkpoint save,NOT_REACHED,No new checkpoint produced by this run
+Second process resume / reload,NOT_RUN,Initial phase did not meet prerequisite
+Output paths of produced files,PASS,Actual existing files under PLAN results root; missing downstream products are not marked PASS
+Full output acceptance,FAIL,Validation/metrics/checkpoint products not reached
+Existing evidence preservation,PASS,194 previous files unchanged by size/mtime

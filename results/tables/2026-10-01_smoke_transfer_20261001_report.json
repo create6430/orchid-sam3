@@ -1,0 +1,80 @@
+{
+  "status": "FAIL",
+  "interpretation": "Functional acceptance incomplete; not proof of a training logic defect",
+  "name": "Development-machine Functional GPU Smoke Test",
+  "run": "D:\\my-project\\orchid-sam3\\results\\models\\smoke_transfer_20261001",
+  "phases": {
+    "initial": {
+      "status": "TIMEOUT",
+      "exit_code": -15,
+      "pid": 522,
+      "last_stage": "forward_start"
+    },
+    "resume": {
+      "status": "NOT_RUN"
+    }
+  },
+  "formal_training_started": false,
+  "reason": "Both phases must exit successfully before checkpoint/content acceptance can PASS",
+  "ready_to_transfer": "NO",
+  "target_machine_smoke": "NOT_RUN",
+  "completed_training_iterations": 0,
+  "checkpoint_produced": false,
+  "known_limitation": {
+    "timeout_seconds": 900,
+    "last_event": {
+      "stage": "forward_start",
+      "timestamp": "2026-10-01T13:28:12.477257+00:00",
+      "monotonic": 120.43695973,
+      "elapsed": 69.414242012,
+      "pid": 522,
+      "step": 0,
+      "allocated": 6983255552,
+      "reserved": 7172259840,
+      "max_allocated": 6983255552,
+      "max_reserved": 7172259840
+    },
+    "last_gpu_sample": {
+      "timestamp": "2026-10-01T13:43:00.937250+00:00",
+      "stage": "forward_start",
+      "gpu": {
+        "output": "10008, 97",
+        "error": "",
+        "returncode": 0
+      }
+    },
+    "sampled_peak_gpu_MiB": 10014,
+    "residency_errors": [
+      "[  128.542528] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12",
+      "[  288.509183] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12",
+      "[  434.575755] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12",
+      "[  581.108359] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12",
+      "[  931.400484] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12"
+    ],
+    "torch_oom_exception_captured": false,
+    "root_cause": "Not determined; do not equate bounded timeout or -12 with OOM"
+  },
+  "production_source_unchanged": {
+    "__init__.py": true,
+    "config.py": true,
+    "data.py": true,
+    "evaluation.py": true,
+    "runtime.py": true,
+    "training.py": true
+  },
+  "preservation": {
+    "status": "PASS",
+    "existing_files_checked": 194,
+    "changed": [],
+    "missing": []
+  },
+  "baseline_files": [
+    "2026-10-01_smoke_transfer_20261001_before.json",
+    "2026-10-01_smoke_transfer_20261001_restart.json",
+    "2026-10-01_smoke_transfer_20261001_after.json"
+  ],
+  "output_root": "D:\\my-project\\orchid-sam3\\results",
+  "new_run": "D:\\my-project\\orchid-sam3\\results\\models\\smoke_transfer_20261001",
+  "deployment_checklist": "D:\\my-project\\orchid-sam3\\LAB_DEPLOYMENT.md",
+  "no_additional_gpu_cases": true
+}

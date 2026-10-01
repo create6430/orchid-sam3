@@ -1,0 +1,15 @@
+﻿check,status,evidence
+WSL2,PASS,6.18.33.2-microsoft-standard-WSL2
+Python training environment,PASS,/mnt/d/my-project/orchid-sam3/.venv-train/bin/python; 3.12.14
+PyTorch import,PASS,2.10.0+cu128; torchvision=0.25.0+cu128
+torch.cuda.is_available,PASS,True
+GPU name RTX3080,PASS,NVIDIA GeForce RTX 3080
+SAM3 import,PASS,/mnt/d/my-project/sam3-reference/sam3/__init__.py
+SAM3 pretrained checkpoint exists,FAIL,Not obtained; user HF access/download required
+SAM3 checkpoint path confirmed,FAIL,No actual file path supplied
+smoke supports RTX3080,PASS,"require_runtime(repo, smoke=True) succeeded on real GPU"
+smoke small batch config,PASS,batch=1; formal default=4; no training executed
+formal GPU guard,PASS,"Expose one of ('NVIDIA GeForce RTX 5090',) as CUDA device 0 (CUDA_VISIBLE_DEVICES)"
+pip check,PASS,No broken requirements found.
+configured callable imports,PASS,27 targets resolved in separate import-only verification
+CPU regression,PASS,9 passed in Linux; no GPU smoke executed

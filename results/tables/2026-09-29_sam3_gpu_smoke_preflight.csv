@@ -1,0 +1,33 @@
+﻿check,status,evidence
+CUDA,FAIL,Not executed: project Python has no torch
+RTX3080_training_use,FAIL,Driver detects RTX3080 10240MiB driver616.92; no GPU training executed
+pretrained_checkpoint,FAIL,No supplied path; SAM3_BASE unset; workspace search found no weights; default HF SAM3 cache only refs/main
+training_dataset,PASS,Read and decoded 211 images and 3789 annotations using CocoSplit
+validation_dataset,PASS,Read and decoded 60 images and 1147 annotations using CocoSplit
+image_annotation_pairing,PASS,CocoSplit checked IDs and image paths and decoded all train/valid images and masks
+class_mapping,PASS,flower=1;stem=3;leaf=2
+DataLoader,FAIL,Blocked before SAM3 runtime
+forward,FAIL,Not executed
+finite_loss,FAIL,Not executed
+backward,FAIL,Not executed
+optimizer_update,FAIL,Not executed
+multiple_iterations,FAIL,Not executed
+validation_inference,FAIL,Not executed
+output_evaluation_compatibility,FAIL,No real model predictions
+checkpoint_save,FAIL,Not executed
+checkpoint_resume,FAIL,Not executed
+resume_iteration,FAIL,Not executed
+output_paths_runtime,FAIL,No training artifacts produced; static paths not counted as PASS
+training_outputs,FAIL,Not produced
+validation_outputs,FAIL,Not produced
+checkpoint_location,FAIL,Not produced
+logs,FAIL,Not produced
+metrics,FAIL,Not produced
+results,FAIL,No GPU results produced
+smoke_tables,FAIL,No GPU metrics produced; this file is only a blocker report
+visualization,N/A,PLAN preview is final test step 6; smoke checkpoints explicitly rejected for final test
+run_naming,FAIL,No actual run; documented run name smoke
+resume_path,FAIL,Not read; expected results/models/smoke/checkpoints/checkpoint.pt
+runtime_platform,FAIL,Current Windows runtime rejected by require_runtime; WSL enumeration E_ACCESSDENIED
+runtime_gpu_guard,FAIL,Existing require_runtime only permits RTX5090; RTX3080 smoke requires scoped change
+smoke_batch_size,FAIL,Existing batch fixed at 4; small-batch option not implemented

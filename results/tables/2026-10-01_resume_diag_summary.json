@@ -1,0 +1,443 @@
+{
+  "status": "UNRESOLVED_ORIGINAL_RESUME",
+  "formal_training_started": false,
+  "output_root": "D:\\my-project\\orchid-sam3\\results",
+  "input_checkpoint": "D:\\my-project\\orchid-sam3\\results\\models\\smoke\\checkpoints\\checkpoint.pt",
+  "production_code_matches_successful_run": {
+    "__init__.py": true,
+    "config.py": true,
+    "data.py": true,
+    "evaluation.py": true,
+    "runtime.py": true,
+    "training.py": true
+  },
+  "all_cases_same_batch": true,
+  "a1_original_restore_metadata_identical": true,
+  "optimizer_AB_metadata_differences": [
+    "mode",
+    "optimizer_groups",
+    "optimizer_state_tensors",
+    "optimizer_state_bytes",
+    "optimizer_state_cuda_bytes"
+  ],
+  "cases": {
+    "a1": {
+      "result": {
+        "status": "PASS",
+        "full_resume": true,
+        "ddp": true,
+        "loss": 917.80126953125,
+        "steps": {
+          "train": 5,
+          "val": 0
+        },
+        "changed_small_tensors": 687,
+        "checkpoint": "/mnt/d/my-project/orchid-sam3/results/models/smoke/checkpoints/diagnostic_a1.pt",
+        "mode": "full"
+      },
+      "source_preserved": {
+        "unchanged": true,
+        "bytes": 10081260002,
+        "mtime_ns": 1790820266310627200
+      },
+      "parameters_unchanged": true,
+      "optimizer_state_bytes": 6708341428,
+      "optimizer_state_cuda_bytes": 6708337064,
+      "device_reference_errors": [],
+      "shape_errors": [],
+      "scaler_before": {
+        "scale": 65536.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2000,
+        "_growth_tracker": 0
+      },
+      "scaler_restored": {
+        "scale": 65536.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2000,
+        "_growth_tracker": 4
+      },
+      "batch_hash": "4293b6a86e3a5d0ff7012f7dba4cdbd77b8af7952d176b6fd60a36e2af1084f1",
+      "new_kernel_residency_errors": null,
+      "last_gpu_sample": {
+        "timestamp": "2026-10-01T04:21:53.269816+00:00",
+        "stage": "checkpoint_save_start",
+        "gpu": {
+          "output": "9990, 1",
+          "error": "",
+          "returncode": 0
+        }
+      },
+      "phase_summary": {
+        "case": "a1",
+        "mode": "full",
+        "ddp": true,
+        "original_restore": false,
+        "status": "PASS",
+        "loss": 917.80126953125,
+        "last_stage": "checkpoint_save_complete",
+        "allocated_bytes": 14134643712,
+        "reserved_bytes": 15992881152,
+        "peak_allocated_bytes": 23037018624,
+        "peak_reserved_bytes": 24947720192,
+        "last_nvidia_smi": "9990, 1",
+        "source_preserved": true,
+        "checkpoint_load": "PASS",
+        "checkpoint_load_seconds": 61.373526,
+        "model_state_restore": "PASS",
+        "model_state_restore_seconds": 1.302112,
+        "optimizer_state_restore": "PASS",
+        "optimizer_state_restore_seconds": 2.281045,
+        "batch_load": "PASS",
+        "batch_load_seconds": 0.49098,
+        "transfer_to_gpu": "PASS",
+        "transfer_to_gpu_seconds": 0.122644,
+        "forward": "PASS",
+        "forward_seconds": 45.780404,
+        "loss_calculation": "PASS",
+        "loss_calculation_seconds": 13.360283,
+        "backward": "PASS",
+        "backward_seconds": 116.513269,
+        "optimizer_step": "PASS",
+        "optimizer_step_seconds": 3.244873,
+        "checkpoint_save": "PASS",
+        "checkpoint_save_seconds": 96.49332,
+        "new_make_resident_errors": "UNKNOWN"
+      }
+    },
+    "noddp1": {
+      "result": {
+        "status": "TIMEOUT",
+        "stage": "forward_start",
+        "last_event": {
+          "stage": "forward_start",
+          "timestamp": "2026-10-01T07:45:18.618099+00:00",
+          "monotonic": 162.913688272,
+          "elapsed": 105.259867525,
+          "pid": 646,
+          "allocated": 10400802304,
+          "reserved": 10708058112,
+          "max_allocated": 10400802304,
+          "max_reserved": 10708058112
+        },
+        "timeout_seconds": 480,
+        "pid": 646,
+        "mode": "full",
+        "reason": "Stage did not return within diagnostic bound; root cause not inferred"
+      },
+      "source_preserved": {
+        "unchanged": true,
+        "bytes": 10081260002,
+        "mtime_ns": 1790820266310627200
+      },
+      "parameters_unchanged": true,
+      "optimizer_state_bytes": 6708341428,
+      "optimizer_state_cuda_bytes": 6708337064,
+      "device_reference_errors": [],
+      "shape_errors": [],
+      "scaler_before": {
+        "scale": 65536.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2000,
+        "_growth_tracker": 0
+      },
+      "scaler_restored": {
+        "scale": 65536.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2000,
+        "_growth_tracker": 4
+      },
+      "batch_hash": "4293b6a86e3a5d0ff7012f7dba4cdbd77b8af7952d176b6fd60a36e2af1084f1",
+      "new_kernel_residency_errors": [
+        "[  160.466608] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12"
+      ],
+      "last_gpu_sample": {
+        "timestamp": "2026-10-01T07:52:54.820350+00:00",
+        "stage": "forward_start",
+        "gpu": {
+          "output": "10000, 100",
+          "error": "",
+          "returncode": 0
+        }
+      },
+      "phase_summary": {
+        "case": "noddp1",
+        "mode": "full",
+        "ddp": false,
+        "original_restore": false,
+        "status": "TIMEOUT",
+        "loss": null,
+        "last_stage": "forward_start",
+        "allocated_bytes": 10400802304,
+        "reserved_bytes": 10708058112,
+        "peak_allocated_bytes": 10400802304,
+        "peak_reserved_bytes": 10708058112,
+        "last_nvidia_smi": "10000, 100",
+        "source_preserved": true,
+        "checkpoint_load": "PASS",
+        "checkpoint_load_seconds": 65.915108,
+        "model_state_restore": "PASS",
+        "model_state_restore_seconds": 0.986115,
+        "optimizer_state_restore": "PASS",
+        "optimizer_state_restore_seconds": 2.386773,
+        "batch_load": "PASS",
+        "batch_load_seconds": 0.517026,
+        "transfer_to_gpu": "PASS",
+        "transfer_to_gpu_seconds": 0.147287,
+        "forward": "TIMEOUT",
+        "forward_seconds": null,
+        "loss_calculation": "NOT_REACHED",
+        "loss_calculation_seconds": null,
+        "backward": "NOT_REACHED",
+        "backward_seconds": null,
+        "optimizer_step": "NOT_REACHED",
+        "optimizer_step_seconds": null,
+        "checkpoint_save": "NOT_REACHED",
+        "checkpoint_save_seconds": null,
+        "new_make_resident_errors": 1
+      }
+    },
+    "original1": {
+      "result": {
+        "status": "TIMEOUT",
+        "stage": "forward_start",
+        "last_event": {
+          "stage": "forward_start",
+          "timestamp": "2026-10-01T07:57:55.934381+00:00",
+          "monotonic": 920.229970695,
+          "elapsed": 177.18466168700002,
+          "pid": 628,
+          "allocated": 13779602944,
+          "reserved": 14166261760,
+          "max_allocated": 13779602944,
+          "max_reserved": 14166261760
+        },
+        "timeout_seconds": 480,
+        "pid": 628,
+        "mode": "full",
+        "reason": "Stage did not return within diagnostic bound; root cause not inferred"
+      },
+      "source_preserved": {
+        "unchanged": true,
+        "bytes": 10081260002,
+        "mtime_ns": 1790820266310627200
+      },
+      "parameters_unchanged": true,
+      "optimizer_state_bytes": 6708341428,
+      "optimizer_state_cuda_bytes": 6708337064,
+      "device_reference_errors": [],
+      "shape_errors": [],
+      "scaler_before": {
+        "scale": 65536.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2000,
+        "_growth_tracker": 0
+      },
+      "scaler_restored": {
+        "scale": 65536.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2000,
+        "_growth_tracker": 4
+      },
+      "batch_hash": "4293b6a86e3a5d0ff7012f7dba4cdbd77b8af7952d176b6fd60a36e2af1084f1",
+      "new_kernel_residency_errors": [
+        "[  852.511864] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12",
+        "[  976.471874] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12"
+      ],
+      "last_gpu_sample": {
+        "timestamp": "2026-10-01T08:05:51.086110+00:00",
+        "stage": "forward_start",
+        "gpu": {
+          "output": "9982, 100",
+          "error": "",
+          "returncode": 0
+        }
+      },
+      "phase_summary": {
+        "case": "original1",
+        "mode": "full",
+        "ddp": true,
+        "original_restore": true,
+        "status": "TIMEOUT",
+        "loss": null,
+        "last_stage": "forward_start",
+        "allocated_bytes": 13779602944,
+        "reserved_bytes": 14166261760,
+        "peak_allocated_bytes": 13779602944,
+        "peak_reserved_bytes": 14166261760,
+        "last_nvidia_smi": "9982, 100",
+        "source_preserved": true,
+        "checkpoint_load": "PASS",
+        "checkpoint_load_seconds": 64.530809,
+        "model_state_restore": "PASS",
+        "model_state_restore_seconds": 0.760977,
+        "optimizer_state_restore": "PASS",
+        "optimizer_state_restore_seconds": 2.264868,
+        "batch_load": "PASS",
+        "batch_load_seconds": 0.498476,
+        "transfer_to_gpu": "PASS",
+        "transfer_to_gpu_seconds": 0.137994,
+        "forward": "TIMEOUT",
+        "forward_seconds": null,
+        "loss_calculation": "NOT_REACHED",
+        "loss_calculation_seconds": null,
+        "backward": "NOT_REACHED",
+        "backward_seconds": null,
+        "optimizer_step": "NOT_REACHED",
+        "optimizer_step_seconds": null,
+        "checkpoint_save": "NOT_REACHED",
+        "checkpoint_save_seconds": null,
+        "new_make_resident_errors": 2
+      }
+    },
+    "weights1": {
+      "result": {
+        "status": "TIMEOUT",
+        "stage": "forward_start",
+        "last_event": {
+          "stage": "forward_start",
+          "timestamp": "2026-10-01T08:09:36.767554+00:00",
+          "monotonic": 1621.063144878,
+          "elapsed": 140.76113767099991,
+          "pid": 640,
+          "allocated": 7066653184,
+          "reserved": 7254048768,
+          "max_allocated": 7066653184,
+          "max_reserved": 7254048768
+        },
+        "timeout_seconds": 480,
+        "pid": 640,
+        "mode": "weights",
+        "reason": "Stage did not return within diagnostic bound; root cause not inferred"
+      },
+      "source_preserved": {
+        "unchanged": true,
+        "bytes": 10081260002,
+        "mtime_ns": 1790820266310627200
+      },
+      "parameters_unchanged": true,
+      "optimizer_state_bytes": 0,
+      "optimizer_state_cuda_bytes": 0,
+      "device_reference_errors": [],
+      "shape_errors": [],
+      "scaler_before": {
+        "scale": 65536.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2000,
+        "_growth_tracker": 0
+      },
+      "scaler_restored": {
+        "scale": 65536.0,
+        "growth_factor": 2.0,
+        "backoff_factor": 0.5,
+        "growth_interval": 2000,
+        "_growth_tracker": 4
+      },
+      "batch_hash": "4293b6a86e3a5d0ff7012f7dba4cdbd77b8af7952d176b6fd60a36e2af1084f1",
+      "new_kernel_residency_errors": [
+        "[ 1628.539503] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12",
+        "[ 1822.524084] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12",
+        "[ 1989.401989] misc dxg: dxgk: dxgkio_make_resident: Ioctl failed: -12"
+      ],
+      "last_gpu_sample": {
+        "timestamp": "2026-10-01T08:17:10.196602+00:00",
+        "stage": "forward_start",
+        "gpu": {
+          "output": "9995, 100",
+          "error": "",
+          "returncode": 0
+        }
+      },
+      "phase_summary": {
+        "case": "weights1",
+        "mode": "weights",
+        "ddp": true,
+        "original_restore": true,
+        "status": "TIMEOUT",
+        "loss": null,
+        "last_stage": "forward_start",
+        "allocated_bytes": 7066653184,
+        "reserved_bytes": 7254048768,
+        "peak_allocated_bytes": 7066653184,
+        "peak_reserved_bytes": 7254048768,
+        "last_nvidia_smi": "9995, 100",
+        "source_preserved": true,
+        "checkpoint_load": "PASS",
+        "checkpoint_load_seconds": 66.460564,
+        "model_state_restore": "PASS",
+        "model_state_restore_seconds": 0.809953,
+        "optimizer_state_restore": "SKIPPED_DIAGNOSTIC_B_ONLY",
+        "optimizer_state_restore_seconds": 0.039088,
+        "batch_load": "PASS",
+        "batch_load_seconds": 0.504917,
+        "transfer_to_gpu": "PASS",
+        "transfer_to_gpu_seconds": 0.070813,
+        "forward": "TIMEOUT",
+        "forward_seconds": null,
+        "loss_calculation": "NOT_REACHED",
+        "loss_calculation_seconds": null,
+        "backward": "NOT_REACHED",
+        "backward_seconds": null,
+        "optimizer_step": "NOT_REACHED",
+        "optimizer_step_seconds": null,
+        "checkpoint_save": "NOT_REACHED",
+        "checkpoint_save_seconds": null,
+        "new_make_resident_errors": 3
+      }
+    }
+  },
+  "checkpoint_verification": {
+    "source": "/mnt/d/my-project/orchid-sam3/results/models/smoke/checkpoints/checkpoint.pt",
+    "checkpoint": "/mnt/d/my-project/orchid-sam3/results/models/smoke/checkpoints/diagnostic_a1.pt",
+    "source_steps": {
+      "train": 4,
+      "val": 0
+    },
+    "new_steps": {
+      "train": 5,
+      "val": 0
+    },
+    "source_optimizer_steps": [
+      4.0
+    ],
+    "new_optimizer_steps": [
+      5.0
+    ],
+    "scaler": {
+      "scale": 65536.0,
+      "growth_factor": 2.0,
+      "backoff_factor": 0.5,
+      "growth_interval": 2000,
+      "_growth_tracker": 5
+    },
+    "diagnostic": {
+      "case": "a1",
+      "mode": "full",
+      "ddp": true,
+      "completed_batches": 1,
+      "partial_epoch": true
+    },
+    "rng_present": true,
+    "model_keys_match": true,
+    "changed_small_tensors": 687,
+    "bytes": 10081260130,
+    "status": "PASS"
+  },
+  "limits": [
+    "A1 passed one full model+optimizer resume iteration, but original restore timed out; no production fix or stable-resume PASS claimed.",
+    "No new validation or full training; original evidence is preserved.",
+    "All timeouts were inside model forward before explicit post-forward synchronization; no new backward timeout was reproduced.",
+    "Kernel -12 is evidence of residency failure, not a captured PyTorch OOM exception.",
+    "No new py-spy stack: offline tool cache unavailable. A1 kernel history unavailable after WSL restart.",
+    "Torch allocator bytes and nvidia-smi physical GPU usage are distinct measurements.",
+    "Sequential runs do not isolate WSL/Windows GPU context or external memory load."
+  ],
+  "next_minimal_action": "Preserve these logs, then compare full restore in a freshly restarted WSL/Windows GPU context with all training settings unchanged. Confirm no other WSL work would be interrupted before restarting. Do not modify production resume based on this evidence alone."
+}

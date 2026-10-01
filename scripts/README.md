@@ -59,7 +59,22 @@ python -m pip install numpy==2.5.3 pycocotools==2.0.11 Pillow==12.3.0
 
 ## SAM 3 訓練與評估：搬至訓練機後執行
 
-以下是待 RTX 5090 實測的候選安裝／執行流程。本機只完成 CPU 與設定驗證，沒有執行模型訓練、推論或顯存測試。原始碼固定在官方 commit `2345a4ad109ac29c569da749c91d84f10dc08c40`；換 commit 必須重新核對 API，而非直接更新主分支。
+以下是待 RTX 5090 實測的安裝／執行流程。開發機RTX3080已取得真實training／validation及單步resume成功證據；搬機前完整functional驗收與最新狀態見DEVLOG及[部署清單](../LAB_DEPLOYMENT.md)。原始碼固定在官方 commit `2345a4ad109ac29c569da749c91d84f10dc08c40`；換 commit 必須重新核對 API，而非直接更新主分支。
+
+### 搬機前兩程序 functional smoke
+
+`2026-10-01_functional_gpu_smoke.py`觀測原始train CLI，不修改正式training／resume語意；獨立run避免覆蓋既有結果。batch1時initial與resume各4 iterations，原始最小validation、save及resume前validation皆保留。每階段timeout預設900秒，不是整體run時間上限。
+
+```bash
+python scripts/2026-10-01_functional_gpu_smoke.py --phase initial --run-name smoke_transfer_20261001 --sam3-repo "$SAM3_REPO" --checkpoint "$SAM3_BASE" --batch-size 1
+# 第一個worker正常exit0且result=PASS，才啟動第二個worker。
+python scripts/2026-10-01_functional_gpu_smoke.py --phase resume --run-name smoke_transfer_20261001 --sam3-repo "$SAM3_REPO" --checkpoint "$SAM3_BASE" --batch-size 1
+python scripts/2026-10-01_functional_gpu_smoke.py --phase audit --run-name smoke_transfer_20261001 --sam3-repo "$SAM3_REPO" --checkpoint "$SAM3_BASE" --batch-size 1
+```
+
+既有run不允許重新initial覆寫；若需另一次測試，使用新run-name並依授權處理乾淨context。觀測程序記錄真實forward／finite loss／backward／optimizer step及每step的參數更新，正常worker結束後才寫PASS；audit以CPU重讀新checkpoint、驗證state及實際檔案。輸出保持`results/models/<run>/`的checkpoints、validation、logs、TensorBoard；stage／quality／functional報告與清單在`results/tables/2026-10-01_<run>_*`。RTX3080 residency不穩定另列環境限制，不將未完成的run冒充PASS，也不自動宣稱是程式錯誤。
+
+實驗室用新run並加`--target-machine --batch-size 4`（RTX5090硬體guard），完整指令與驗收條件見[部署清單](../LAB_DEPLOYMENT.md)。此時每階段是4張影像的一個batch，step1→2；仍不是正式訓練。
 
 ### 1. 搬移資料與建立環境
 
@@ -92,6 +107,30 @@ python scripts/2026-09-28_check_sam3_environment.py --sam3-repo "$SAM3_REPO" --c
 
 ### 2. 準備設定與測試儲存／恢復
 
+#### 本機 RTX 3080 前置環境（2026-09-29）
+
+WSL 的 `E_ACCESSDENIED` 已以沙箱外查詢定位為本次工具執行限制；既有 Ubuntu 是 WSL2，可掛載本專案。訓練使用 WSL 的 Python 3.12 與 `/mnt/d/my-project/orchid-sam3/.venv-train/`，不是 Windows `.venv`。固定來源為 `/mnt/d/my-project/sam3-reference/`。
+
+```bash
+cd /mnt/d/my-project/orchid-sam3
+# 僅首次建立，已存在時直接 activate，不重建。
+uv venv --python 3.12 --seed .venv-train
+source .venv-train/bin/activate
+python -m pip install torch==2.10.0 torchvision==0.25.0 --index-url https://download.pytorch.org/whl/cu128
+python -m pip install -r requirements-training.txt -e '../sam3-reference[train]'
+python -m pip check
+```
+
+SAM3 pretrained 權重必須由本人在 https://huggingface.co/facebook/sam3 登入、閱讀並接受條件，取得存取權後下載官方 `sam3.pt`；不可改用 Transformers 的 safetensors 或 SAM 3.1 video 權重。權重取得前不得宣告 checkpoint 存在或載入成功。不要將 token 貼入對話、程式或 Git。
+
+2026-09-29 階段只準備環境；使用者提供權重後已另行授權真實 GPU smoke。RTX 3080 參數為 `--smoke-test --smoke-batch-size 1 --workers 0 --run-name smoke`。小 batch 僅可在 smoke mode 使用，範圍 1–4；未指定時仍為 4。仍使用 4 張真實 train 影像及涵蓋三類的最小 valid 前綴。smoke runtime 允許 RTX 3080 或 RTX 5090，正式訓練與最終評估仍要求 RTX 5090。小 batch 不保證所有執行狀態均有足夠顯存，OOM 仍停止並回報。
+
+輸出沿用 `results/models/smoke/`；resume 須帶相同 `--smoke-batch-size`，並讀取該 run 的 `checkpoints/checkpoint.pt`。批次大小會寫入 input signature 與 OOM 紀錄。環境盤點可使用 `scripts/2026-09-28_check_sam3_environment.py --smoke-test`；此參數不執行模型或訓練，整體仍保留 training dry run PENDING。
+
+2026-09-30 環境實測：Ubuntu WSL2、Python 3.12.14、torch 2.10.0+cu128、torchvision 0.25.0+cu128、NumPy 1.26.4。PyTorch 實際辨識 RTX 3080、CUDA 初始化成功、bf16=True、架構含 sm_86；SAM3 與 Trainer imports、設定引用的 27 個 callable imports，以及 9 項 CPU 回歸測試通過。`pip check` 通過。這些結果不是 GPU 訓練 smoke 通過。
+
+`decord` 只供上游影片分支使用，本專案靜態影像不使用它；其 0.6.0 wheel 內含 cp36 標記，Python 3.12 的 pip check 會拒絕，因此已從 training requirements 移除，不改動上游程式。Windows checkout 在 WSL 的 CRLF 判定差異以 SAM3 checkout 的 local Git 設定 `core.autocrlf=true` 解決，原始碼內容未修改。
+
 ```bash
 # 沒有 GPU 或權重也可先解析設定；不提供 checkpoint 時，僅產生待補權重的設定。
 python scripts/2026-09-28_train_sam3_orchid.py --sam3-repo "$SAM3_REPO" --run-name config_check --prepare-only
@@ -109,7 +148,23 @@ smoke test 使用官方 loader 的固定子集抽樣，僅用 train 的 4 張影
 
 `--prepare-only` 產生的是當地絕對路徑設定；搬到另一台機器後重跑準備命令，不直接使用舊的 `config_resolved.yaml`。
 
-### 3. 正式訓練
+#### RTX 3080 實際 smoke 指令與產物稽核（2026-10-01）
+
+以下是本次執行指令紀錄，並非正式訓練。既有 `smoke` run 已有 checkpoint 時，第一條命令會拒絕覆蓋；完成總計 2 epochs 後，第二條命令也會拒絕重做已完成的訓練。
+
+```bash
+cd /mnt/d/my-project/orchid-sam3
+.venv-train/bin/python scripts/2026-09-28_train_sam3_orchid.py --sam3-repo /mnt/d/my-project/sam3-reference --checkpoint /mnt/d/my-project/sam3.pt --run-name smoke --smoke-test --smoke-batch-size 1 --workers 0
+.venv-train/bin/python scripts/2026-09-28_train_sam3_orchid.py --sam3-repo /mnt/d/my-project/sam3-reference --checkpoint /mnt/d/my-project/sam3.pt --run-name smoke --smoke-test --smoke-batch-size 1 --workers 0 --epochs 2 --resume
+# 僅讀取既有模型與結果，不執行 forward 或訓練；需兩輪完成後執行。
+.venv-train/bin/python scripts/2026-10-01_audit_gpu_smoke.py
+```
+
+稽核 CSV、參數差異 JSON 與含 Windows／WSL 完整路徑的清單寫入 `results/tables/2026-10-01_sam3_gpu_smoke_*`。訓練、validation、checkpoint、logs、TensorBoard 均沿用 `results/models/smoke/`。最終狀態見稽核 CSV 與 DEVLOG；歷史失敗日誌保留，不可將它們視為最後一次執行結果。
+
+本次必要相容修正在 `src/orchid_sam3/runtime.py`：官方 image checkpoint 排除未啟用的 SAM2 neck 22 項、其餘 strict load；上游 inference-only MLP 在梯度啟用時改用相同權重的可微分運算；未納入 PLAN loss 的 semantic head 輸出 detach，讓 DDP 正確處理其未用參數。沒有修改 SAM3 checkout、輸入解析度或正式訓練 batch 設定。
+
+### 3. 正式訓練（本次未執行）
 
 ```bash
 python scripts/2026-09-28_train_sam3_orchid.py --sam3-repo "$SAM3_REPO" --checkpoint "$SAM3_BASE" --run-name orchid_v1
@@ -153,4 +208,4 @@ python scripts/2026-09-28_evaluate_sam3_orchid.py --sam3-repo "$SAM3_REPO" --che
 python -m pytest tests/test_orchid_pipeline.py -q -p no:cacheprovider
 ```
 
-測試使用現有真實 COCO 遮罩作一致性檢查，公式測試不產生模型指標；不把真實遮罩自我比對的 1.0 當成模型表現。未搬移資料或未提供固定版 `SAM3_REPO` 時，對應測試會 skip，須確認報告沒有把 skip 當作完整驗證。尚待 GPU 驗證：模型與套件載入、完整 batch 前向／反向、bf16、顯存、checkpoint 恢復及實際推論預覽。
+測試使用現有真實 COCO 遮罩作一致性檢查，公式測試不產生模型指標；不把真實遮罩自我比對的 1.0 當成模型表現。未搬移資料或未提供固定版 `SAM3_REPO` 時，對應測試會 skip，須確認報告沒有把 skip 當作完整驗證。CPU 測試本身不驗證 GPU 前後向或 checkpoint 恢復；真實 RTX 3080 smoke 狀態以 DEVLOG 與實際產物稽核表為準。RTX 5090 正式 batch 4 與正式 test 預覽仍待後續執行。

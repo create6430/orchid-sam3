@@ -1,0 +1,53 @@
+{
+  "comparisons": [
+    {
+      "comparison": "pretrained_to_epoch1",
+      "examined_small_tensors": 702,
+      "changed_small_tensors": 687,
+      "finite": true,
+      "examples": [
+        {
+          "name": "backbone.vision_backbone.trunk.blocks.0.norm1.weight",
+          "max_abs_delta": 3.3080577850341797e-06
+        },
+        {
+          "name": "backbone.vision_backbone.trunk.blocks.12.norm1.bias",
+          "max_abs_delta": 1.1652708053588867e-05
+        },
+        {
+          "name": "backbone.vision_backbone.trunk.blocks.24.attn.qkv.bias",
+          "max_abs_delta": 4.100799560546875e-05
+        },
+        {
+          "name": "backbone.language_backbone.encoder.transformer.resblocks.2.ln_2.weight",
+          "max_abs_delta": 1.806020736694336e-05
+        },
+        {
+          "name": "backbone.language_backbone.encoder.transformer.resblocks.13.attn.out_proj.bias",
+          "max_abs_delta": 1.8477439880371094e-05
+        },
+        {
+          "name": "backbone.language_backbone.encoder.transformer.resblocks.23.mlp.c_fc.bias",
+          "max_abs_delta": 1.811981201171875e-05
+        },
+        {
+          "name": "transformer.encoder.layers.2.norm3.bias",
+          "max_abs_delta": 0.00030402839183807373
+        },
+        {
+          "name": "transformer.decoder.layers.3.cross_attn.in_proj_bias",
+          "max_abs_delta": 0.0002980530261993408
+        },
+        {
+          "name": "segmentation_head.instance_seg_head.bias",
+          "max_abs_delta": 0.00029589608311653137
+        }
+      ]
+    }
+  ],
+  "optimizer_steps": [
+    [
+      4.0
+    ]
+  ]
+}

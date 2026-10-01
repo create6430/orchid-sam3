@@ -128,3 +128,26 @@ def test_prepare_does_not_change_labels():
     assert derived["images"] == source["images"]
     assert derived["annotations"] == source["annotations"]
     assert {c["id"]: c["name"] for c in derived["categories"]} == CLASSES
+
+
+def test_smoke_batch_override_preserves_formal_config():
+    repo = Path(os.environ.get("SAM3_REPO", ROOT.parent / "sam3-reference"))
+    if not repo.is_dir():
+        pytest.skip("Set SAM3_REPO to the pinned official checkout")
+    check_source(repo)
+    run = ROOT / "results/models/_config_unit_check"
+    source = ROOT / "data/processed/annotations_area_fixed"
+    args = (repo, run, None, run / "train.coco.json", source / "train",
+            source / "valid/_annotations.coco.json")
+    for size in (1, 2, 4):
+        cfg = make_config(*args, smoke=True, smoke_batch_size=size)
+        assert cfg.trainer.data.train.batch_size == size
+        assert cfg.roboflow_train.num_images == 4
+        assert Path(cfg.trainer.checkpoint.save_dir) == run / "checkpoints"
+    assert make_config(*args).trainer.data.train.batch_size == 4
+    assert make_config(*args, smoke=True).trainer.data.train.batch_size == 4
+    with pytest.raises(ValueError, match="requires smoke=True"):
+        make_config(*args, smoke_batch_size=1)
+    for size in (0, 5, True, 1.5):
+        with pytest.raises(ValueError):
+            make_config(*args, smoke=True, smoke_batch_size=size)

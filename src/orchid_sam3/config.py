@@ -16,7 +16,9 @@ def check_source(repo):
     return repo
 
 
-def make_config(repo, run, checkpoint, train_json, train_images, valid_json, epochs=10, workers=4, smoke=False):
+def make_config(repo, run, checkpoint, train_json, train_images, valid_json, epochs=10, workers=4, smoke=False, smoke_batch_size=None):
+    if smoke_batch_size is not None and (not smoke or type(smoke_batch_size) is not int or not 1 <= smoke_batch_size <= 4):
+        raise ValueError("smoke_batch_size requires smoke=True and an integer from 1 to 4")
     from omegaconf import OmegaConf
     # Resolvers used by the pinned YAML, registered without importing torch.
     if not OmegaConf.has_resolver("times"):
@@ -31,7 +33,7 @@ def make_config(repo, run, checkpoint, train_json, train_images, valid_json, epo
     cfg.roboflow_train.supercategory = "orchid"
     cfg.roboflow_train.num_images = 4 if smoke else None
     cfg.scratch.enable_segmentation = True
-    cfg.scratch.train_batch_size = 4
+    cfg.scratch.train_batch_size = smoke_batch_size if smoke_batch_size is not None else 4
     cfg.scratch.gradient_accumulation_steps = 1
     cfg.scratch.num_train_workers = workers
     cfg.scratch.max_data_epochs = epochs

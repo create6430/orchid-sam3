@@ -1,0 +1,12 @@
+{
+  "checkpoint": "/mnt/d/my-project/sam3.pt",
+  "bytes": 3450062241,
+  "sha256": "9999e2341ceef5e136daa386eecb55cb414446a00ac2b55eb2dfd2f7c3cf8c9e",
+  "weights_only_deserialization": true,
+  "state_entries": 1465,
+  "model_strict_load": true,
+  "active_image_state_entries": 1134,
+  "inactive_sam2_neck_entries_excluded": 22,
+  "strict_load_evidence": "results/models/smoke/logs/smoke_retry_5_console.log",
+  "verified_at": "2026-10-01"
+}

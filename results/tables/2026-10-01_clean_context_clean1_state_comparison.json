@@ -1,0 +1,18 @@
+{
+  "case": "clean1",
+  "after_restore_equal_to": {
+    "a1": true,
+    "original1": true
+  },
+  "device_reference_errors": [],
+  "optimizer_state_cuda_bytes": 6708337064,
+  "implementation_matches_original": {
+    "__init__.py": true,
+    "config.py": true,
+    "data.py": true,
+    "evaluation.py": true,
+    "runtime.py": true,
+    "training.py": true
+  },
+  "batch_sha256": "4293b6a86e3a5d0ff7012f7dba4cdbd77b8af7952d176b6fd60a36e2af1084f1"
+}

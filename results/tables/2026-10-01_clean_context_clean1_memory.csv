@@ -1,0 +1,25 @@
+﻿phase,timestamp,boot_id,mem_total_bytes,mem_available_bytes,mem_free_bytes,swap_used_bytes,free_h
+before_restart,2026-10-01T08:36:42.810777+00:00,630e632b-c6df-4e5c-8dd5-c906f2f7a962,16691916800,15832039424,15065362432,0,"               total        used        free      shared  buff/cache   available
+Mem:            15Gi       798Mi        13Gi       3.5Mi       987Mi        14Gi
+Swap:          4.0Gi          0B       4.0Gi
+"
+after_restart_idle,2026-10-01T08:37:52.208831+00:00,21ea6048-5955-45c8-a2a7-7d0fb94b82ad,16691924992,15833653248,15109398528,0,"               total        used        free      shared  buff/cache   available
+Mem:            15Gi       830Mi        14Gi       3.5Mi       947Mi        14Gi
+Swap:          4.0Gi          0B       4.0Gi
+"
+immediately_before_run,2026-10-01T08:39:45.333892+00:00,21ea6048-5955-45c8-a2a7-7d0fb94b82ad,16691924992,15881322496,14750900224,0,"               total        used        free      shared  buff/cache   available
+Mem:            15Gi       772Mi        13Gi       3.5Mi       1.3Gi        14Gi
+Swap:          4.0Gi          0B       4.0Gi
+"
+during_restore,2026-10-01T08:42:47.039566+00:00,21ea6048-5955-45c8-a2a7-7d0fb94b82ad,16691924992,5435871232,3905085440,0,"               total        used        free      shared  buff/cache   available
+Mem:            15Gi        10Gi       3.6Gi        83Mi       1.7Gi       5.1Gi
+Swap:          4.0Gi          0B       4.0Gi
+"
+during_forward,2026-10-01T08:45:13.129113+00:00,21ea6048-5955-45c8-a2a7-7d0fb94b82ad,16691924992,4078198784,2463211520,0,"               total        used        free      shared  buff/cache   available
+Mem:            15Gi        11Gi       2.3Gi        85Mi       1.8Gi       3.8Gi
+Swap:          4.0Gi          0B       4.0Gi
+"
+later_observation_different_boot,2026-10-01T13:07:42.296232+00:00,2cc3bf43-fd7f-43e6-bff7-9a1e2a6f47c0,16691929088,15857004544,14975569920,0,"               total        used        free      shared  buff/cache   available
+Mem:            15Gi       794Mi        13Gi       3.5Mi       1.0Gi        14Gi
+Swap:          4.0Gi          0B       4.0Gi
+"

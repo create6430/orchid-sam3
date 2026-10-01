@@ -3,13 +3,8 @@
 應用於農業機器人之視覺分割自動化：規劃微調 SAM 3，分割 flower、stem、leaf。
 
 - 專案負責人：陳彥彣
-<<<<<<< HEAD
-- 任務提出者：廖柏任
-- 狀態：SPEC 與 PLAN 草稿整理中，尚未建立訓練與評估腳本，尚無實測結果。
-=======
 - 提出者：廖柏任
-- 狀態：資料驗證、訓練與評估程式已建立；已做本機 CPU／設定檢查，待搬至 RTX 5090 訓練機完成 GPU 實測，尚無模型結果。
->>>>>>> 39c7d98 (2026/09/29)
+- 狀態：過往真實GPU初始training／validation、A1及clean-context resume成功證據保留。本次搬機前兩程序functional smoke在第一個forward達900秒timeout，驗收未完成，判FAIL；這不是已證實的程式邏輯錯誤。RTX3080／WSL residency與速度波動另列Known Limitation。必要檔案與環境資訊已備齊，但依本次functional PASS門檻，Ready to transfer=NO；Target-machine smoke尚未執行。未開始正式訓練。詳見[搬機清單](LAB_DEPLOYMENT.md)與DEVLOG。
 - 任務建立日期：2026-09-28；結束日期待確認。
 
 ## 如何開始
@@ -17,6 +12,7 @@
 1. 閱讀 [工作規則](instructions.md)、[SPEC](SPEC.md) 與 [PLAN](plans/2026-09-28_sam3_orchid_flower_stem_leaf_finetune.md)。
 2. 依 [資料說明](data/README.md) 準備影像與 COCO JSON。
 3. 依 [訓練機執行說明](scripts/README.md#sam-3-訓練與評估搬至訓練機後執行) 建立 Linux／WSL2 專用環境，先做小批次測試與 checkpoint 恢復，再正式訓練。
+4. 搬機依 [LAB_DEPLOYMENT.md](LAB_DEPLOYMENT.md) 複製實際working tree、完整資料與真實pretrained；在實驗室電腦另跑target-machine smoke，不沿用開發機的PASS作目標機驗收。
 
 入口為 `scripts/2026-09-28_train_sam3_orchid.py` 與 `scripts/2026-09-28_evaluate_sam3_orchid.py`，共用邏輯在 `src/orchid_sam3/`。訓練使用官方 SAM 3 Trainer、instance mask loss、batch size 4、bfloat16、1008 px、10 epochs；每個 epoch 用 valid 的 macro IoU 選模型，test 不參與選模。可用 `--prepare-only` 在沒有 GPU／權重時檢查設定。
 
@@ -29,15 +25,15 @@
 | 項目 | 狀態 |
 |---|---|
 | 目前本機 Python | 3.13.12；尚未驗證為訓練環境 |
-| 訓練作業系統／專用環境 | 程式目標為 Linux／WSL2、Python 3.12；待目標機實測 |
+| 訓練作業系統／專用環境 | Ubuntu 26.04／WSL2、Python 3.12.14；`.venv-train`，與 Windows `.venv` 分開 |
 | 預定 GPU | RTX 5090，32 GB；執行前驗證硬體與可用顯存 |
-| GPU 驅動／CUDA 安裝方式 | 本機 RTX 3080 10 GB，驅動 616.92；訓練機另驗證，候選使用 cu128 wheel |
-| SAM 3 來源、commit、基礎權重位置與版本 | facebookresearch/sam3，固定 `2345a4ad109ac29c569da749c91d84f10dc08c40`；權重由執行者提供，未下載 |
-| PyTorch／torchvision 與其他依賴 | 待專用環境測試後鎖定 |
+| GPU 驅動／CUDA 安裝方式 | 本機 RTX 3080 10 GB，驅動 616.92；使用 PyTorch cu128 wheel，CUDA 實測可用 |
+| SAM 3 來源、commit、基礎權重位置與版本 | facebookresearch/sam3，固定 `2345a4ad109ac29c569da749c91d84f10dc08c40`；官方 `D:\my-project\sam3.pt`（WSL `/mnt/d/my-project/sam3.pt`），有效 image 分支 1134 項 strict load 通過 |
+| PyTorch／torchvision 與其他依賴 | torch 2.10.0+cu128、torchvision 0.25.0+cu128、NumPy 1.26.4、Hydra 1.3.7；完整實測版本見 run 內 `requirements.actual.txt` |
 
-[requirements.txt](requirements.txt) 目前只有待完成說明，安裝它不會建立完整訓練環境。PLAN 第 4 步須完成 GPU 與小批次訓練測試，記錄實際套件版本、安裝指令及以上環境資訊。
+[requirements.txt](requirements.txt) 已記錄本次 WSL2 實測環境的 pip freeze 版本；先依 scripts/README 準備固定 commit 的相鄰 `sam3-reference`，再於專案根目錄的 Linux 環境安裝。這是實測快照，不是跨平台或含套件雜湊的 lock；RTX 5090 正式 batch 4 仍須在目標機驗證。
 
-[requirements-training.txt](requirements-training.txt) 提供候選附加依賴，尚非 GPU 驗證後的鎖定檔。正式執行時每個 run 保存 `environment.json`、`requirements.actual.txt`、設定與資料／基礎權重雜湊。現有 `.venv` 的 NumPy 2.5.3 不符合固定版 SAM 3 的 `numpy<2` 限制，請建立新的 Python 3.12 訓練環境。
+[requirements-training.txt](requirements-training.txt) 提供附加依賴範圍；精確實測版本見 requirements.txt。每個 run 保存 `environment.json`、`requirements.actual.txt`、設定與資料／基礎權重雜湊。Windows `.venv` 不作 GPU 訓練；本機已建立 WSL Python 3.12 `.venv-train`。
 
 ## 資料與成果
 

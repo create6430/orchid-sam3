@@ -1,0 +1,6 @@
+{
+  "timestamp": "2026-10-01T13:26:05.174196+00:00",
+  "action": "wsl --shutdown",
+  "returncode": 0,
+  "safety": "Only system services and our observer; no compute processes"
+}

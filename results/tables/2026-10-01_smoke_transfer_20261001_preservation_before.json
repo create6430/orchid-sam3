@@ -1,0 +1,778 @@
+{
+  "results\\figures\\2026-09-28_orchid_split_review.html": {
+    "bytes": 93047,
+    "mtime_ns": 1790620705158837700
+  },
+  "results\\figures\\README.md": {
+    "bytes": 285,
+    "mtime_ns": 1790601559134919600
+  },
+  "results\\tables\\2026-09-28_orchid_coco_inventory.csv": {
+    "bytes": 6242,
+    "mtime_ns": 1790620705159837800
+  },
+  "results\\tables\\2026-09-28_orchid_coco_quality.csv": {
+    "bytes": 1647846,
+    "mtime_ns": 1790802798439243800
+  },
+  "results\\tables\\2026-09-28_orchid_split_checks.csv": {
+    "bytes": 841,
+    "mtime_ns": 1790620705162490500
+  },
+  "results\\tables\\2026-09-28_orchid_split_pairs.csv": {
+    "bytes": 47598,
+    "mtime_ns": 1790620705163992800
+  },
+  "results\\tables\\2026-09-28_sam3_code_validation.csv": {
+    "bytes": 1235,
+    "mtime_ns": 1790620705163992800
+  },
+  "results\\tables\\2026-09-28_sam3_environment.csv": {
+    "bytes": 1329,
+    "mtime_ns": 1790781426906475800
+  },
+  "results\\tables\\2026-09-29_sam3_gpu_smoke_preflight.csv": {
+    "bytes": 1954,
+    "mtime_ns": 1790695778331048900
+  },
+  "results\\tables\\2026-09-30_sam3_checkpoint_check.json": {
+    "bytes": 452,
+    "mtime_ns": 1790803576854279900
+  },
+  "results\\tables\\2026-09-30_sam3_prerequisites.csv": {
+    "bytes": 1003,
+    "mtime_ns": 1790781397987421900
+  },
+  "results\\tables\\2026-09-30_sam3_training_environment.json": {
+    "bytes": 3878,
+    "mtime_ns": 1790781398019388600
+  },
+  "results\\tables\\2026-10-01_clean_context_clean1_checkpoint_verification.json": {
+    "bytes": 878,
+    "mtime_ns": 1790860143895662800
+  },
+  "results\\tables\\2026-10-01_clean_context_clean1_files.csv": {
+    "bytes": 5475,
+    "mtime_ns": 1790860224042106500
+  },
+  "results\\tables\\2026-10-01_clean_context_clean1_memory.csv": {
+    "bytes": 2132,
+    "mtime_ns": 1790860224038087400
+  },
+  "results\\tables\\2026-10-01_clean_context_clean1_preservation.json": {
+    "bytes": 96,
+    "mtime_ns": 1790860128440842200
+  },
+  "results\\tables\\2026-10-01_clean_context_clean1_preservation_before.json": {
+    "bytes": 22031,
+    "mtime_ns": 1790843964036644100
+  },
+  "results\\tables\\2026-10-01_clean_context_clean1_report.json": {
+    "bytes": 18592,
+    "mtime_ns": 1790860224038087400
+  },
+  "results\\tables\\2026-10-01_clean_context_clean1_state_comparison.json": {
+    "bytes": 465,
+    "mtime_ns": 1790844280651967900
+  },
+  "results\\tables\\2026-10-01_clean_context_clean1_summary.csv": {
+    "bytes": 1942,
+    "mtime_ns": 1790860224024410500
+  },
+  "results\\tables\\2026-10-01_resume_diag_a1.csv": {
+    "bytes": 5236,
+    "mtime_ns": 1790828533475776600
+  },
+  "results\\tables\\2026-10-01_resume_diag_checkpoint_verification.json": {
+    "bytes": 789,
+    "mtime_ns": 1790841901531757100
+  },
+  "results\\tables\\2026-10-01_resume_diag_clean1.csv": {
+    "bytes": 5557,
+    "mtime_ns": 1790844674395027500
+  },
+  "results\\tables\\2026-10-01_resume_diag_files.csv": {
+    "bytes": 11357,
+    "mtime_ns": 1790842748891192700
+  },
+  "results\\tables\\2026-10-01_resume_diag_noddp1.csv": {
+    "bytes": 3108,
+    "mtime_ns": 1790841200021349900
+  },
+  "results\\tables\\2026-10-01_resume_diag_original1.csv": {
+    "bytes": 3485,
+    "mtime_ns": 1790841958598845500
+  },
+  "results\\tables\\2026-10-01_resume_diag_summary.csv": {
+    "bytes": 1616,
+    "mtime_ns": 1790842748827409800
+  },
+  "results\\tables\\2026-10-01_resume_diag_summary.json": {
+    "bytes": 15432,
+    "mtime_ns": 1790842748877522100
+  },
+  "results\\tables\\2026-10-01_resume_diag_weights1.csv": {
+    "bytes": 3431,
+    "mtime_ns": 1790842659756146000
+  },
+  "results\\tables\\2026-10-01_sam3_gpu_smoke_audit.csv": {
+    "bytes": 57394,
+    "mtime_ns": 1790822564643266000
+  },
+  "results\\tables\\2026-10-01_sam3_gpu_smoke_files.csv": {
+    "bytes": 10031,
+    "mtime_ns": 1790822564761821500
+  },
+  "results\\tables\\2026-10-01_sam3_gpu_smoke_initial_updates.json": {
+    "bytes": 1547,
+    "mtime_ns": 1790802892169322800
+  },
+  "results\\tables\\2026-10-01_sam3_gpu_smoke_updates.json": {
+    "bytes": 1596,
+    "mtime_ns": 1790822564647781400
+  },
+  "results\\tables\\2026-10-01_smoke_transfer_20261001_before.json": {
+    "bytes": 44709,
+    "mtime_ns": 1790861135481184800
+  },
+  "results\\tables\\2026-10-01_smoke_transfer_20261001_restart.json": {
+    "bytes": 184,
+    "mtime_ns": 1790861165173963000
+  },
+  "results\\tables\\README.md": {
+    "bytes": 209,
+    "mtime_ns": 1790601559134919600
+  },
+  "results\\models\\config_check\\config_resolved.yaml": {
+    "bytes": 10654,
+    "mtime_ns": 1790618575844876300
+  },
+  "results\\models\\config_check\\data_limitations.json": {
+    "bytes": 227,
+    "mtime_ns": 1790618575845877500
+  },
+  "results\\models\\config_check\\input_signature.json": {
+    "bytes": 63307,
+    "mtime_ns": 1790618575844876300
+  },
+  "results\\models\\smoke\\best.json": {
+    "bytes": 75,
+    "mtime_ns": 1790804074717109000
+  },
+  "results\\models\\smoke\\completion.json": {
+    "bytes": 94,
+    "mtime_ns": 1790785351376868400
+  },
+  "results\\models\\smoke\\config_resolved.yaml": {
+    "bytes": 10384,
+    "mtime_ns": 1790802814985990600
+  },
+  "results\\models\\smoke\\config_target_001.yaml": {
+    "bytes": 10290,
+    "mtime_ns": 1790784351484528300
+  },
+  "results\\models\\smoke\\config_target_002.yaml": {
+    "bytes": 10384,
+    "mtime_ns": 1790802814994908200
+  },
+  "results\\models\\smoke\\data_limitations.json": {
+    "bytes": 221,
+    "mtime_ns": 1790802815004675700
+  },
+  "results\\models\\smoke\\environment.json": {
+    "bytes": 3545,
+    "mtime_ns": 1790802858648804700
+  },
+  "results\\models\\smoke\\failure.json": {
+    "bytes": 939,
+    "mtime_ns": 1790822485188653800
+  },
+  "results\\models\\smoke\\input_signature.json": {
+    "bytes": 62539,
+    "mtime_ns": 1790802814998414900
+  },
+  "results\\models\\smoke\\requirements.actual.txt": {
+    "bytes": 1930,
+    "mtime_ns": 1790802861636858300
+  },
+  "results\\models\\smoke\\smoke_validation_images.json": {
+    "bytes": 126,
+    "mtime_ns": 1790803988438385200
+  },
+  "results\\models\\smoke_check_20260929\\config_resolved.yaml": {
+    "bytes": 10684,
+    "mtime_ns": 1790693542796035000
+  },
+  "results\\models\\smoke_check_20260929\\config_target_001.yaml": {
+    "bytes": 10684,
+    "mtime_ns": 1790693542804553100
+  },
+  "results\\models\\smoke_check_20260929\\data_limitations.json": {
+    "bytes": 227,
+    "mtime_ns": 1790693542807137200
+  },
+  "results\\models\\smoke_check_20260929\\input_signature.json": {
+    "bytes": 63857,
+    "mtime_ns": 1790693542806629100
+  },
+  "results\\models\\smoke_check_20260929\\inputs\\train.coco.json": {
+    "bytes": 1914901,
+    "mtime_ns": 1790693542726663000
+  },
+  "results\\models\\smoke\\checkpoints\\best.pt": {
+    "bytes": 10081260002,
+    "mtime_ns": 1790804074607030700
+  },
+  "results\\models\\smoke\\checkpoints\\checkpoint.pt": {
+    "bytes": 10081260002,
+    "mtime_ns": 1790820266310627200
+  },
+  "results\\models\\smoke\\checkpoints\\checkpoint_1.pt": {
+    "bytes": 10081260002,
+    "mtime_ns": 1790820363018874500
+  },
+  "results\\models\\smoke\\checkpoints\\diagnostic_a1.pt": {
+    "bytes": 10081260130,
+    "mtime_ns": 1790828519289296700
+  },
+  "results\\models\\smoke\\checkpoints\\diagnostic_clean1.pt": {
+    "bytes": 10081260130,
+    "mtime_ns": 1790844662611136800
+  },
+  "results\\models\\smoke\\inputs\\train.coco.json": {
+    "bytes": 1836762,
+    "mtime_ns": 1790802814883023400
+  },
+  "results\\models\\smoke\\logs\\2026-10-01_clean_context_clean1_after.json": {
+    "bytes": 47413,
+    "mtime_ns": 1790843872751708700
+  },
+  "results\\models\\smoke\\logs\\2026-10-01_clean_context_clean1_before.json": {
+    "bytes": 50978,
+    "mtime_ns": 1790843803719893900
+  },
+  "results\\models\\smoke\\logs\\2026-10-01_clean_context_clean1_environment.json": {
+    "bytes": 347,
+    "mtime_ns": 1790843924762819300
+  },
+  "results\\models\\smoke\\logs\\2026-10-01_clean_context_clean1_kernel_pre_run.log": {
+    "bytes": 39484,
+    "mtime_ns": 1790843980784477200
+  },
+  "results\\models\\smoke\\logs\\2026-10-01_clean_context_clean1_pre_run.json": {
+    "bytes": 2211,
+    "mtime_ns": 1790843985474696900
+  },
+  "results\\models\\smoke\\logs\\2026-10-01_clean_context_clean1_restart.json": {
+    "bytes": 309,
+    "mtime_ns": 1790843822699734500
+  },
+  "results\\models\\smoke\\logs\\2026-10-01_clean_context_clean1_windows_before.json": {
+    "bytes": 4052,
+    "mtime_ns": 1790843784872061900
+  },
+  "results\\models\\smoke\\logs\\2026-10-01_resume_diag_kernel_before_noddp.log": {
+    "bytes": 32179,
+    "mtime_ns": 1790840569686483000
+  },
+  "results\\models\\smoke\\logs\\attempt_1_failure.json": {
+    "bytes": 1651,
+    "mtime_ns": 1790782177688759400
+  },
+  "results\\models\\smoke\\logs\\attempt_2_failure.json": {
+    "bytes": 79,
+    "mtime_ns": 1790782337001269300
+  },
+  "results\\models\\smoke\\logs\\attempt_3_config.yaml": {
+    "bytes": 10290,
+    "mtime_ns": 1790782426557030400
+  },
+  "results\\models\\smoke\\logs\\attempt_3_failure.json": {
+    "bytes": 1073,
+    "mtime_ns": 1790783103678097600
+  },
+  "results\\models\\smoke\\logs\\attempt_4_config.yaml": {
+    "bytes": 10325,
+    "mtime_ns": 1790783317249895500
+  },
+  "results\\models\\smoke\\logs\\attempt_4_interruption.txt": {
+    "bytes": 170,
+    "mtime_ns": 1790784286813770700
+  },
+  "results\\models\\smoke\\logs\\best_stats.json": {
+    "bytes": 70,
+    "mtime_ns": 1790785052770439500
+  },
+  "results\\models\\smoke\\logs\\log.txt": {
+    "bytes": 703400,
+    "mtime_ns": 1790803127788270300
+  },
+  "results\\models\\smoke\\logs\\smoke_initial_console.log": {
+    "bytes": 10586,
+    "mtime_ns": 1790782177772889900
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_console.log": {
+    "bytes": 141773,
+    "mtime_ns": 1790803127788270300
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_final_stack.txt": {
+    "bytes": 1082,
+    "mtime_ns": 1790822451988197400
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_kernel.log": {
+    "bytes": 38769,
+    "mtime_ns": 1790820814144024400
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_kernel_final.log": {
+    "bytes": 39245,
+    "mtime_ns": 1790822451936216200
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_native_stack.txt": {
+    "bytes": 5971,
+    "mtime_ns": 1790821218232073500
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_native_stack_2.txt": {
+    "bytes": 5971,
+    "mtime_ns": 1790821646841083900
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_stack.txt": {
+    "bytes": 1741,
+    "mtime_ns": 1790803164433260200
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_stack_2.txt": {
+    "bytes": 1557,
+    "mtime_ns": 1790803279821227600
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_stack_3.txt": {
+    "bytes": 1701,
+    "mtime_ns": 1790803497796779200
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_stack_4.txt": {
+    "bytes": 1376,
+    "mtime_ns": 1790803664840108100
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_stack_5.txt": {
+    "bytes": 1376,
+    "mtime_ns": 1790803816962183300
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_timeout.json": {
+    "bytes": 844,
+    "mtime_ns": 1790822460715082900
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_training_stack.txt": {
+    "bytes": 1652,
+    "mtime_ns": 1790820444948667000
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_training_stack_2.txt": {
+    "bytes": 1652,
+    "mtime_ns": 1790820623511796400
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_training_stack_3.txt": {
+    "bytes": 2329,
+    "mtime_ns": 1790820814409259500
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_training_stack_4.txt": {
+    "bytes": 1982,
+    "mtime_ns": 1790821009304868100
+  },
+  "results\\models\\smoke\\logs\\smoke_resume_training_stack_5.txt": {
+    "bytes": 1082,
+    "mtime_ns": 1790821424151906400
+  },
+  "results\\models\\smoke\\logs\\smoke_retry_2_console.log": {
+    "bytes": 148288,
+    "mtime_ns": 1790782337350889300
+  },
+  "results\\models\\smoke\\logs\\smoke_retry_3_console.log": {
+    "bytes": 145595,
+    "mtime_ns": 1790783103987427800
+  },
+  "results\\models\\smoke\\logs\\smoke_retry_4_console.log": {
+    "bytes": 141261,
+    "mtime_ns": 1790783375043083800
+  },
+  "results\\models\\smoke\\logs\\smoke_retry_4_stack.txt": {
+    "bytes": 3180,
+    "mtime_ns": 1790783720453438000
+  },
+  "results\\models\\smoke\\logs\\smoke_retry_4_stack_2.txt": {
+    "bytes": 3278,
+    "mtime_ns": 1790784007506347900
+  },
+  "results\\models\\smoke\\logs\\smoke_retry_5_console.log": {
+    "bytes": 147693,
+    "mtime_ns": 1790784874423604500
+  },
+  "results\\models\\smoke\\logs\\smoke_stack_snapshot.txt": {
+    "bytes": 4710,
+    "mtime_ns": 1790782856432630100
+  },
+  "results\\models\\smoke\\logs\\smoke_stack_snapshot_2.txt": {
+    "bytes": 4710,
+    "mtime_ns": 1790782997811673200
+  },
+  "results\\models\\smoke\\logs\\train_stats.json": {
+    "bytes": 4418,
+    "mtime_ns": 1790784874788625900
+  },
+  "results\\models\\smoke\\tensorboard\\events.out.tfevents.1790782154.DESKTOP-E8BF7FL.531.0869ffe99-70c7-4ea1-ba52-9984fe8caa6c": {
+    "bytes": 88,
+    "mtime_ns": 1790782154184999500
+  },
+  "results\\models\\smoke\\tensorboard\\events.out.tfevents.1790782304.DESKTOP-E8BF7FL.540.081d2ec81-c309-466d-96b0-3e9e4f05b4c6": {
+    "bytes": 88,
+    "mtime_ns": 1790782304224685200
+  },
+  "results\\models\\smoke\\tensorboard\\events.out.tfevents.1790782460.DESKTOP-E8BF7FL.531.0cb937397-5ecb-4ce2-ad36-8720b20441a3": {
+    "bytes": 19280,
+    "mtime_ns": 1790783099861449600
+  },
+  "results\\models\\smoke\\tensorboard\\events.out.tfevents.1790783348.DESKTOP-E8BF7FL.531.08ebce1db-f8fa-45d1-bb47-2057a12d24a1": {
+    "bytes": 88,
+    "mtime_ns": 1790783348245440300
+  },
+  "results\\models\\smoke\\tensorboard\\events.out.tfevents.1790784396.DESKTOP-E8BF7FL.909.03d94b4a3-b8c3-43d6-8ba8-1c18f07ceb6b": {
+    "bytes": 26621,
+    "mtime_ns": 1790785351418816600
+  },
+  "results\\models\\smoke\\tensorboard\\events.out.tfevents.1790802947.DESKTOP-E8BF7FL.546.0313a6516-665a-4163-b98c-c1421e7d8b86": {
+    "bytes": 164,
+    "mtime_ns": 1790820363161443900
+  },
+  "results\\models\\smoke\\validation\\epoch_001.csv": {
+    "bytes": 1150,
+    "mtime_ns": 1790803988441393600
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\config.yaml": {
+    "bytes": 10367,
+    "mtime_ns": 1790828135428039000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\console.log": {
+    "bytes": 153860,
+    "mtime_ns": 1790828519361621900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\environment.json": {
+    "bytes": 3545,
+    "mtime_ns": 1790828135396887400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\gpu_monitor.jsonl": {
+    "bytes": 2121,
+    "mtime_ns": 1790828513318337700
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\log.txt": {
+    "bytes": 139365,
+    "mtime_ns": 1790828172492323000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\result.json": {
+    "bytes": 284,
+    "mtime_ns": 1790828519363963000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\source_checkpoint.json": {
+    "bytes": 152,
+    "mtime_ns": 1790828091057898900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\source_preserved.json": {
+    "bytes": 83,
+    "mtime_ns": 1790828533458733000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\stages.jsonl": {
+    "bytes": 13079,
+    "mtime_ns": 1790828519361621900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\state_after_ddp.json": {
+    "bytes": 1231132,
+    "mtime_ns": 1790828241120605400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\state_after_restore.json": {
+    "bytes": 1231133,
+    "mtime_ns": 1790828238320984600
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\state_after_step.json": {
+    "bytes": 1231127,
+    "mtime_ns": 1790828422736861000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\state_before_restore.json": {
+    "bytes": 304491,
+    "mtime_ns": 1790828173210033300
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\command.json": {
+    "bytes": 250,
+    "mtime_ns": 1790843985689948800
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\config.yaml": {
+    "bytes": 10379,
+    "mtime_ns": 1790844015406055800
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\console.log": {
+    "bytes": 155043,
+    "mtime_ns": 1790844663977091900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\environment.json": {
+    "bytes": 3545,
+    "mtime_ns": 1790844015355523200
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\gpu_monitor.jsonl": {
+    "bytes": 3253,
+    "mtime_ns": 1790844648274695800
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\log.txt": {
+    "bytes": 139515,
+    "mtime_ns": 1790844044371690800
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\result.json": {
+    "bytes": 316,
+    "mtime_ns": 1790844663979599600
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\source_checkpoint.json": {
+    "bytes": 152,
+    "mtime_ns": 1790843985685436400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\source_preserved.json": {
+    "bytes": 83,
+    "mtime_ns": 1790844674340175900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\stages.jsonl": {
+    "bytes": 14112,
+    "mtime_ns": 1790844663975061700
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\state_after_ddp.json": {
+    "bytes": 1231132,
+    "mtime_ns": 1790844178572811600
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\state_after_restore.json": {
+    "bytes": 1231133,
+    "mtime_ns": 1790844175586544300
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\state_after_step.json": {
+    "bytes": 1231127,
+    "mtime_ns": 1790844569288331700
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\state_before_restore.json": {
+    "bytes": 304491,
+    "mtime_ns": 1790844044368624900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\system_after.json": {
+    "bytes": 37433,
+    "mtime_ns": 1790860062711059000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\system_during_forward.json": {
+    "bytes": 47946,
+    "mtime_ns": 1790844313224851000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\system_during_restore.json": {
+    "bytes": 45179,
+    "mtime_ns": 1790844167074258200
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\config.yaml": {
+    "bytes": 10379,
+    "mtime_ns": 1790840615281353800
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\console.log": {
+    "bytes": 148270,
+    "mtime_ns": 1790840718620933500
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\environment.json": {
+    "bytes": 3545,
+    "mtime_ns": 1790840615241237300
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\gpu_monitor.jsonl": {
+    "bytes": 2916,
+    "mtime_ns": 1790841174849362100
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\kernel_after.log": {
+    "bytes": 43428,
+    "mtime_ns": 1790841254236495400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\kernel_during.log": {
+    "bytes": 39431,
+    "mtime_ns": 1790840972355725700
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\log.txt": {
+    "bytes": 139369,
+    "mtime_ns": 1790840646893743000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\result.json": {
+    "bytes": 506,
+    "mtime_ns": 1790841198877060400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\source_checkpoint.json": {
+    "bytes": 152,
+    "mtime_ns": 1790840572695558200
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\source_preserved.json": {
+    "bytes": 83,
+    "mtime_ns": 1790841200009811400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\stages.jsonl": {
+    "bytes": 7947,
+    "mtime_ns": 1790840718618926600
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\state_after_ddp.json": {
+    "bytes": 1231133,
+    "mtime_ns": 1790840717877910600
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\state_after_restore.json": {
+    "bytes": 1231133,
+    "mtime_ns": 1790840716930073900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\state_before_restore.json": {
+    "bytes": 304491,
+    "mtime_ns": 1790840647398481200
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\timeout_stack.txt": {
+    "bytes": 339,
+    "mtime_ns": 1790841199360014800
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\command.json": {
+    "bytes": 253,
+    "mtime_ns": 1790841259074589100
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\config.yaml": {
+    "bytes": 10388,
+    "mtime_ns": 1790841300943689900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\console.log": {
+    "bytes": 149292,
+    "mtime_ns": 1790841475936224400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\environment.json": {
+    "bytes": 3545,
+    "mtime_ns": 1790841300904903600
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\gpu_monitor.jsonl": {
+    "bytes": 3367,
+    "mtime_ns": 1790841951116997800
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\kernel_after.log": {
+    "bytes": 52151,
+    "mtime_ns": 1790841994357615400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\kernel_during.log": {
+    "bytes": 47002,
+    "mtime_ns": 1790841562345817700
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\log.txt": {
+    "bytes": 139518,
+    "mtime_ns": 1790841341186122300
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\result.json": {
+    "bytes": 511,
+    "mtime_ns": 1790841957126959100
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\source_checkpoint.json": {
+    "bytes": 152,
+    "mtime_ns": 1790841259070063900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\source_preserved.json": {
+    "bytes": 83,
+    "mtime_ns": 1790841958588100300
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\stages.jsonl": {
+    "bytes": 9035,
+    "mtime_ns": 1790841475936224400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\state_after_ddp.json": {
+    "bytes": 1231132,
+    "mtime_ns": 1790841475257204200
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\state_after_restore.json": {
+    "bytes": 1231133,
+    "mtime_ns": 1790841472231826400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\state_before_restore.json": {
+    "bytes": 304491,
+    "mtime_ns": 1790841341177939500
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\timeout_stack.txt": {
+    "bytes": 339,
+    "mtime_ns": 1790841957594259600
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\command.json": {
+    "bytes": 255,
+    "mtime_ns": 1790841997851010900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\config.yaml": {
+    "bytes": 10385,
+    "mtime_ns": 1790842038207563500
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\console.log": {
+    "bytes": 149233,
+    "mtime_ns": 1790842176768493300
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\environment.json": {
+    "bytes": 3545,
+    "mtime_ns": 1790842038150934300
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\gpu_monitor.jsonl": {
+    "bytes": 3072,
+    "mtime_ns": 1790842630237505300
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\kernel_after.log": {
+    "bytes": 60753,
+    "mtime_ns": 1790842692164420000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\kernel_during.log": {
+    "bytes": 55846,
+    "mtime_ns": 1790842344041260600
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\log.txt": {
+    "bytes": 139517,
+    "mtime_ns": 1790842077427021100
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\result.json": {
+    "bytes": 511,
+    "mtime_ns": 1790842658308382400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\source_checkpoint.json": {
+    "bytes": 152,
+    "mtime_ns": 1790841997845923700
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\source_preserved.json": {
+    "bytes": 83,
+    "mtime_ns": 1790842659744962000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\stages.jsonl": {
+    "bytes": 8977,
+    "mtime_ns": 1790842176768493300
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\state_after_ddp.json": {
+    "bytes": 304493,
+    "mtime_ns": 1790842176136735200
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\state_after_restore.json": {
+    "bytes": 304494,
+    "mtime_ns": 1790842174752577900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\state_before_restore.json": {
+    "bytes": 304494,
+    "mtime_ns": 1790842077420493200
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\timeout_stack.txt": {
+    "bytes": 339,
+    "mtime_ns": 1790842658962525200
+  },
+  "results\\models\\smoke\\logs\\resume_diag_weights1\\tensorboard\\events.out.tfevents.1790842039.DESKTOP-E8BF7FL.640.03e5be199-371a-43f8-9823-65c69b35dce2": {
+    "bytes": 88,
+    "mtime_ns": 1790842039275971600
+  },
+  "results\\models\\smoke\\logs\\resume_diag_original1\\tensorboard\\events.out.tfevents.1790841301.DESKTOP-E8BF7FL.628.063d6e4b2-e295-4be1-b14d-0e7b61eed39f": {
+    "bytes": 88,
+    "mtime_ns": 1790841301923272400
+  },
+  "results\\models\\smoke\\logs\\resume_diag_noddp1\\tensorboard\\events.out.tfevents.1790840616.DESKTOP-E8BF7FL.646.082b7eee2-171d-4097-a40e-e6e9440e0d23": {
+    "bytes": 88,
+    "mtime_ns": 1790840616367672000
+  },
+  "results\\models\\smoke\\logs\\resume_diag_clean1\\tensorboard\\events.out.tfevents.1790844016.DESKTOP-E8BF7FL.628.0ff1d0760-f41a-4178-a4e9-6b4597bbd1a4": {
+    "bytes": 88,
+    "mtime_ns": 1790844016429109900
+  },
+  "results\\models\\smoke\\logs\\resume_diag_a1\\tensorboard\\events.out.tfevents.1790828136.DESKTOP-E8BF7FL.551.0dc290f53-0f01-4e37-9aeb-a29f31865904": {
+    "bytes": 88,
+    "mtime_ns": 1790828136308194300
+  },
+  "results\\models\\config_check\\inputs\\train.coco.json": {
+    "bytes": 1914901,
+    "mtime_ns": 1790618575775837100
+  }
+}

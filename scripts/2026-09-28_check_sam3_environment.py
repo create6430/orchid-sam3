@@ -28,7 +28,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--sam3-repo", type=Path)
     parser.add_argument("--checkpoint", type=Path)
+    parser.add_argument("--smoke-test", action="store_true", help="Allow RTX 3080 for smoke prerequisites; does not run training")
     args = parser.parse_args()
+    allowed = ("NVIDIA GeForce RTX 5090", "NVIDIA GeForce RTX 3080") if args.smoke_test else ("NVIDIA GeForce RTX 5090",)
     rows = []
 
     def record(check, status, value, detail=""):
@@ -42,10 +44,10 @@ def main():
         devices = list(csv.reader(output.splitlines(), skipinitialspace=True))
         matches = []
         for index, (name, memory, driver) in enumerate(devices):
-            matches.append("RTX 5090" in name)
+            matches.append(name in allowed)
             record(f"gpu_{index}", "INFO", name, f"total_memory_MiB={memory}; driver={driver}")
-        record("planned_gpu", "PASS" if any(matches) else "FAIL", "RTX 5090",
-               "SPEC requires RTX 5090; no automatic batch-size or resolution changes")
+        record("planned_gpu", "PASS" if any(matches) else "FAIL", " / ".join(allowed),
+               "Smoke permits RTX 3080; formal training still requires RTX 5090")
     except (OSError, RuntimeError, ValueError, subprocess.TimeoutExpired) as exc:
         record("planned_gpu", "FAIL", "unavailable", str(exc))
 
@@ -68,7 +70,7 @@ def main():
                     name = torch.cuda.get_device_name(index)
                     record(f"torch_gpu_{index}", "INFO", name,
                            f"capability={torch.cuda.get_device_capability(index)}; bf16={bf16}")
-                    if "RTX 5090" in name:
+                    if name in allowed:
                         record("target_bf16", "PASS" if bf16 else "FAIL", bf16)
     except Exception as exc:
         record("torch_runtime", "FAIL", type(exc).__name__, str(exc))
@@ -93,7 +95,7 @@ def main():
     else:
         record("checkpoint", "PENDING", "missing", "Supply an existing SAM 3 base checkpoint with --checkpoint")
     record("training_dry_run", "PENDING", "not executed",
-           "Requires real training batch=4, bf16 autocast, forward/backward, checkpoint save/resume")
+           "Requires real training with recorded batch size, bf16 autocast, forward/backward, checkpoint save/resume")
     record("overall", "FAIL" if any(r["status"] == "FAIL" for r in rows) else "PENDING",
            "step 4 incomplete", "This script inventories prerequisites only")
     report = ROOT / "results/tables/2026-09-28_sam3_environment.csv"

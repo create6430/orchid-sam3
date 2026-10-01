@@ -122,3 +122,39 @@
 - 固定縮放至 1008×1008，不額外隨機增強；每筆訓練樣本包含 flower／leaf／stem 三個文字查詢，無目標類別也保留負查詢。僅在衍生訓練 JSON 移除未使用的 0=sam3 類別列，不改原始標註。
 - 每 epoch 在 valid 計算 SPEC 的像素彙總指標，依 macro IoU 儲存 best；每 epoch 與最後 checkpoint 均保留。macro 只用於 validation 選模，test 驗收仍逐類使用原門檻。
 - 本機驗證範圍為真實資料、設定解析、CPU 評估公式與程式語法；GPU 前向／反向、顯存、checkpoint 儲存／恢复、正式 test 評估與 300 dpi 預覽產出待目標機執行。
+
+## RTX 3080 smoke 前置環境授權：2026-09-29
+
+- 使用者授權準備 WSL2 Python 3.12 訓練環境，以及僅限 smoke 的 RTX 3080 與小 batch 支援；本階段明確禁止執行 GPU smoke 或正式訓練。
+- 正式訓練維持 RTX 5090、batch size 4、1008×1008 與既有微調策略。smoke 新增 `--smoke-batch-size 1..4`，預設仍為 4，保留 4 張 train 影像及涵蓋三類的最小 valid 前綴，不修改原始資料。
+- 所有訓練輸出沿用 `results/models/<run-name>/`；smoke 使用 `smoke`，resume 必須匹配該 run 的 batch 設定並使用原 checkpoint 路徑。
+- checkpoint 必須為有授權的官方 SAM3 `sam3.pt`。本人完成 Hugging Face 存取條件與下載之前，checkpoint 項目保持未完成，不使用假權重。
+
+## 真實 GPU smoke 執行授權：2026-10-01（承接 2026-09-30）
+
+- 使用者已提供 `D:\my-project\sam3.pt`，明確授權在 RTX 3080 執行真正的 forward／loss／backward／optimizer、validation、checkpoint save／resume 與實際落盤驗證；本段取代前置環境階段的「尚不執行 smoke」限制，仍禁止正式完整訓練。
+- 沿用 `results/models/smoke/`，batch size 1、4 張 train、涵蓋三類的 2 張 valid、1008×1008、bf16；一輪 4 iterations，再 resume 至總計 2 epochs。正式 RTX 5090、batch size 4 設定不變。
+- 稽核表與檔案清單依既有命名規則存於 `results/tables/2026-10-01_sam3_gpu_smoke_*.csv`；重跑稽核入口為 `scripts/2026-10-01_audit_gpu_smoke.py`，不會開始訓練。
+- 第 6 步正式 test 指標與 300 dpi 預覽不屬於本次 smoke；不得將少量 valid 推論冒充正式 test 成果。完成狀態以實際產物、稽核表及 DEVLOG 為準。
+
+## Resume 單 batch 診斷授權：2026-10-01
+
+- 使用者授權以現存 smoke/checkpoints/checkpoint.pt 直接診斷：batch1、同一個真實 batch、1 iteration、無validation；先完整restore，再依證據比較fresh optimizer及單GPU非DDP。這些控制組不取代正式resume語意。
+- 階段時間與CUDA allocated/reserved/peak、nvidia-smi、狀態／參數device與引用關係均記錄；獨立監控程序對單一步驟設480秒上限。timeout只定位最後階段，不直接判定OOM或根因。
+- 診斷入口 `scripts/2026-10-01_diagnose_resume.py`；新增日誌置於既有 `results/models/smoke/logs/resume_diag_<case>/`，彙總表在 `results/tables/2026-10-01_resume_diag_<case>.csv`。成功時僅新增 `results/models/smoke/checkpoints/diagnostic_<case>.pt`，保留所有原成功產物。
+- 原始training/runtime與resume signature不更動；僅找到具體原因後才修正並重測完整restore的一個step與新checkpoint保存。不得開始正式訓練。
+
+## Clean WSL context 單案例授權：2026-10-01
+
+- 依使用者指示，先檢查WSL工作／GPU程序；若有需保留工作則停止等待決定，否則保存baseline後重啟WSL。不得刪除既有產物、重裝環境或更改正式resume語意。
+- 重啟後先驗證原venv、torch、CUDA、RTX3080與SAM3，再只執行`clean1`：原始checkpoint、full restore、原始DDP、batch1、單一iteration、480秒階段timeout；不執行fresh training或其他A/B案例。
+- 重啟前後baseline使用既有run的`logs/2026-10-01_clean_context_clean1_*`；階段日誌沿用`logs/resume_diag_clean1/`，表格沿用`results/tables/2026-10-01_*clean1*`，成功checkpoint僅新增`checkpoints/diagnostic_clean1.pt`。
+- 單次成功只標記本案例PASS，不代表根因已修復；與A1和既有三次timeout比較時，必須區分WSL重啟、Windows GPU context、實體GPU記憶體與Torch allocator數值。
+
+## 搬機前最終 functional smoke：2026-10-01
+
+- 使用者授權單次兩階段驗收，功能通過與RTX3080/WSL residency／速度限制分開記錄，不再無限制調校；不開始正式訓練。
+- 獨立run=`smoke_transfer_20261001`，沿用`results/models/<run-name>/`。由觀測入口`2026-10-01_functional_gpu_smoke.py`呼叫原始training CLI；第一階段原始pretrained、batch1、4 iterations、最小validation／save並正常退出；第二階段新程序以原始`--resume --epochs 2`完成4個resumed iterations與validation/save。兩階段均為4張真實資料的一個epoch，不改scheduler／optimizer／DDP／resume語意。
+- 逐階段watchdog預設900秒，容納曾觀測到較慢的fresh iteration；沒有全run短限時。timeout只記錄未返回階段，不直接等同OOM或程式bug。成功必須有exit0、有限loss、實際參數更新、validation、step增加、原始state restore與新checkpoint重新載入證據。
+- 新logs置於run的`logs/functional_initial/`與`logs/functional_resume/`，原始metrics／TensorBoard／validation／checkpoints保持既有位置；tables使用`results/tables/2026-10-01_<run-name>_*`。Data quality報告僅改為本次獨立檔名，避免覆寫歷史表；數值檢查不變。
+- 搬機清單在專案根目錄`LAB_DEPLOYMENT.md`，README及scripts/README連結它。Development functional PASS且必要檔案／環境資訊完整，才標Ready to transfer=YES；Target-machine smoke維持尚未執行。

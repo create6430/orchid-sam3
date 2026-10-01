@@ -1,0 +1,39 @@
+{
+  "timestamp": "2026-10-01T13:09:01.198018+00:00",
+  "source": "/mnt/d/my-project/orchid-sam3/results/models/smoke/checkpoints/checkpoint.pt",
+  "checkpoint": "/mnt/d/my-project/orchid-sam3/results/models/smoke/checkpoints/diagnostic_clean1.pt",
+  "source_steps": {
+    "train": 4,
+    "val": 0
+  },
+  "new_steps": {
+    "train": 5,
+    "val": 0
+  },
+  "source_optimizer_steps": [
+    4.0
+  ],
+  "new_optimizer_steps": [
+    5.0
+  ],
+  "scaler": {
+    "scale": 65536.0,
+    "growth_factor": 2.0,
+    "backoff_factor": 0.5,
+    "growth_interval": 2000,
+    "_growth_tracker": 5
+  },
+  "diagnostic": {
+    "case": "clean1",
+    "mode": "full",
+    "ddp": true,
+    "original_restore": true,
+    "completed_batches": 1,
+    "partial_epoch": true
+  },
+  "rng_present": true,
+  "model_keys_match": true,
+  "changed_small_tensors": 687,
+  "bytes": 10081260130,
+  "status": "PASS"
+}
